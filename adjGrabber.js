@@ -1,43 +1,94 @@
-var express = require('express');
-var app = express();
-var server = require('http').createServer(app);
-var io = require('socket.io')(server);
-var osc = require('node-osc'),io;
+var program = require('commander');
 
-var oscServer, oscClient;
-var firstTime = true;
 
-server.listen(8080);
-console.log('Local server established at port 8080');
+var WordPOS = require('wordpos'),
+    wordpos = new WordPOS();
 
-// create fileserver
-app.use(express.static(__dirname + '/HTML'));
-app.get('/', function(req, res,next) {
-    res.sendFile(__dirname + '/HTML/index.html');
+// Get data from The Guardian
+var guardian = require('guardian-news');
+
+guardian.config({
+  apiKey : 'b4090503-4d27-4c0f-bf3e-e20b710a58fe'
 });
 
-// initialise socket and create OSC Server
-io.sockets.on('connection', function (socket) {
-	console.log('* page loaded')
-    socket.on("config", function (obj) {
-        if(firstTime == true){
-            oscServer = new osc.Server(obj.server.port, obj.server.host);
-            oscClient = new osc.Client(obj.client.host, obj.client.port);
-            console.log('* new OSC Server  -  Port:'+obj.server.port+' IP:'+obj.server.host);
-            console.log('* new OSC Client  -  Port:'+obj.client.port+' IP:'+obj.client.host);
+function Article(title, text, adjectives, tree) {
+    this.title = title;
+    this.text = text;
+    this.adjectives = adjectives;
+    this.tree = tree;
+};
 
-            firstTime = false;
-            //oscClient.send('/status', socket.sessionId + ' connected');
-        }
+var articles = [];
+var adjectives = [];
 
-        oscServer.on('message', function(msg, rinfo) {
-            process.stdout.write('\r* received OSC Message: '+msg[0]+' '+msg[1]||' ');
-            socket.emit("message", msg);
-        });
+// program
+//     .version('0.0.1')
+//     .option('-m --monitor', 'Live monitor the incomming articles')
+
+
+// if (program.monitor) {
+//     setTimeout(function() {
+//setInterval(function() {
+setTimeout(function(){
+    grabNewArticles();
+    setTimeout(function(){
+        extractAdjectives();
+        setTimeout(function(){
+            console.log('');
+            console.log('ARTICLES');
+            console.log('------');
+
+            showOnConsole();
+        }, 1000);
+    }, 5000);
+}, 500);
+//}, 5000);
+
+//     }, 10000);
+// }
+
+function grabNewArticles(){
+    guardian.content({
+      section : 'world',
+      'show-blocks' : 'all'
+    }).then(function(response){
+        console.log("--> gather articles from the quardian");
+        articles = [];
+        var results = response.response.results;
+        for (i = 0; i < results.length; i++) {
+                articles.push(new Article(results[i].webTitle, results[i].blocks.body[0].bodyTextSummary));
+        };
+
+
+
+    }, function(err){
+      console.log(err);
     });
-    socket.on("message", function (obj) {
-        oscClient.send(obj[0], obj[1]||1);
-        process.stdout.write('\r* sent OSC Message: '+obj[0]+' '+obj[1]||'x');
+};
 
-    });
-});
+
+function extractAdjectives(){
+    console.log("--> extract adjectives from the "+articles.length+" articles");
+    for (i = 0; i<articles.length; i++){
+        //articles[i].adjectives = i;
+        console.log(wordpos.getAdjectives(articles[i].text)); //.then(function(results){
+        //     //articles[i].addAdj(results);
+        //     //adjectives[i] = results;
+        //     articles[i].adjectives = results;
+        //
+        //     console.log(articles[i].adjectives);
+        // }, function(err){
+        //     articles[i].adjectives = i;
+        // });
+        // //articles[i].adjectives
+    };
+}
+
+function showOnConsole(){
+    for (i = 0; i<articles.length; i++){
+        console.log('TITLE: ' + articles[i].title);
+        //console.log('TEXT : ' + articles[i].text);
+        console.log('ADJ #: ' + articles[i].adjectives);
+        console.log('------');
+    }
+}
