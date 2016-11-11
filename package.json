@@ -12,7 +12,7 @@
     "guardian-news": "x.x.x",
     "stream-json": "x.x.x",
     "spacy-nlp": "x.x.x",
-    "wordpos": "x.x.x"
-
+    "wordpos": "x.x.x",
+    "multi-sentiment": "x.x.x"
   }
 }

@@ -1,0 +1,128 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+      <title>IPAD UI</title>
+      <link href="mystyle.css" rel="stylesheet" type="text/css" />
+      <script src="/socket.io/socket.io.js"></script>
+      <script>
+         var currentLocation = window.location;
+         var socket = io.connect('http://'+currentLocation.hostname+':8080');
+         console.log('oi');
+         socket.on('connect', function() {
+             // sends to socket.io server the host/port of oscServer
+             // and oscClient
+             socket.emit('config',
+                 {
+                     server: {
+                         port: 7001,
+                         host: '127.0.0.1'
+                     },
+                     client: {
+                         port: 7002,
+                         host: '127.0.0.1'
+                     }
+                 }
+             );
+         });
+         
+         
+         
+         socket.on('message', function(obj) {
+             var status = document.getElementById("status");
+             //status.innerHTML = obj[0];
+             console.log(obj);
+         
+              if(obj[0] == '/flood' && obj[1]>0.0) { // do flood screen
+         document.getElementById("floodoverlay").innerHTML = '<div class="MESSAGE"> <p>FLOOD</p> <img src="floodwarning.png" width="1000" height="1000" /><button class="cancelknap" type="button" onClick="stopFlood();" value="Go back">Cancel</button></div>';
+         
+         }else{
+             document.getElementById("floodoverlay").innerHTML =  ' ';
+            }
+         });
+         
+         function stopFlood() {
+         socket.emit('message', ['/stopFlood', 1.0]);
+         document.getElementById("floodoverlay").innerHTML =  ' ';
+         } 
+      </script>
+   </head>
+   <body>
+      <div class="ipadsize">
+         <div id="floodoverlay" class="OVERLAY">
+         </div>
+         <!--OVERLAY -->
+         <div class="content">
+            <div class="topbar">
+               <button class="reliefknap" type="button">   <img src="menu.png" width="100" height="100" alt="menu" /></button>
+               <button class="reliefknap2" type="button"><img src="fullscreen.png" width="100" height="100" alt="fullscreen" /></button>
+               <h1> Økolariet / Vejle </h1>
+            </div>
+            <!--topbar-->
+            <div class="kortet">
+               <div class="lokation">
+                  <h2> VEJLE HAVN </h2>
+                  <div class="point"> <img src="point.png" width="255" height="255" alt="point" /></div>
+                  <div class="zonemap">
+                     <!--HAVNEN--><!--HAVNEN--><!--HAVNEN--><!--HAVNEN-->
+                     <button class="zone1" type="button">
+                        <img src="zone1null.png" usemap="#zonemap1"/>   
+                        <map name="zonemap1">
+                           <area shape="poly" coords="50,97,145,118,181,1,206,8,179,113,213,120,206,144,356,185,330,304,147,259,141,294,111,278,113,247,77,238,69,217,58,218,56,233,1,215,25,128,36,131,48,93" onClick="socket.emit('message', ['/zone1', 1.0]);" alt="zone1">
+                        </map>
+                     </button>
+                     <!--ØDEMARK--><!--ØDEMARK--><!--ØDEMARK-->
+                     <button class="zone2" type="button">
+                        <img src="zone2null.png" usemap="#zonemap2"  />   
+                        <map name="zonemap2">
+                           <area shape="poly" coords="4,0,48,9,34,101,124,94,238,119,292,152,329,145,395,23,514,55,513,109,499,148,486,150,494,169,520,175,505,233,521,241,505,399,549,422,550,478,818,456,823,522,670,536,328,517,195,475,5,405,6,23,-3,-4" onClick="socket.emit('message', ['/zone2', 1.0]);" alt="zone2">
+                        </map>
+                     </button>
+                     <!--ØDEMARK--><!--ØDEMARK--><!--ØDEMARK--><!--ØDEMARK-->
+                     <!--BUGT-->  <!--BUGT-->  <!--BUGT-->  <!--BUGT-->  <!--BUGT-->  <!--BUGT-->
+                     <button class="zone3" type="button">
+                        <img src="zone3null.png" usemap="#zonemap3"/>   
+                        <map name="zonemap3">
+                           <area shape="poly" coords="3,3,93,0,461,231,463,272,359,218,274,335,276,272,199,86,87,34,2,21" onClick="socket.emit('message', ['/zone3', 1.0]);" alt="zone3">
+                        </map>
+                     </button>
+                     <!--BUGT-->  <!--BUGT-->  <!--BUGT-->  <!--BUGT-->  <!--BUGT-->
+                     <button class="zone4" type="button">
+                        <img src="zone4null.png" usemap="#zonemap4"/>   
+                        <map name="zonemap4">
+                           <area shape="poly" coords="97,2,176,12,166,27,146,139,141,146,139,171,157,194,194,208,174,271,150,267,140,219,2,141,5,134,71,70,91,29" onClick="socket.emit('message', ['/zone4', 1.0]);" alt="zone4">
+                        </map>
+                     </button>
+                     <button class="zone5" type="button">
+                        <img src="zone5null.png" usemap="#zonemap5"/>   
+                        <map name="zonemap5">
+                           <area shape="poly" coords="132,63,8,7,0,52,106,161,136,132,136,99,132,69" onClick="socket.emit('message', ['/zone5', 1.0]);" alt="zone5">
+                        </map>
+                     </button>
+                     <div class="zone6">
+                        <img src="zone6null.png" usemap="#zonemap6"/>   
+                        <map name="zonemap6">
+                           <area shape="poly" coords="13,79,83,83,154,31,155,46,92,93,14,87" onClick="socket.emit('message', ['/zone6', 1.0]);" alt="zone6">
+                           <area shape="poly" coords="652,48,654,58,1055,24,1242,24,1254,5,1206,1,650,46" onClick="socket.emit('message', ['/zone6', 1.0]);" alt="zone6">
+                           <area shape="poly" coords="2112,328,2029,299,1999,300,1990,281,1386,98,1585,153,1769,188,2124,299" onClick="socket.emit('message', ['/zone6', 1.0]);" alt="zone6">
+                        </map>
+                     </div>
+                  </div>
+                  <!--zonemap-->
+               </div>
+               <object class="rykop" type="image/svg+xml" data="KORT.svg" width="2732px" height="2048px">Your browser does not support SVG</object>
+            </div>
+            <!--kortet-->
+            <div class="wrap_me">
+               <button class="faneknap_pushed" type="button" onclick="location.href='index.html';" value="Go to område" > Område</button>
+            </div>
+            <div class="wrap_me">
+               <button class="faneknap" type="button" onclick="location.href='timeline.html';" value="Go to årstal"> Årstal</button>
+            </div>
+         </div>
+         <!--content-->
+      </div>
+      <!--ipadsize-->
+   </body>
+</html>

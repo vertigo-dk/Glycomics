@@ -1,0 +1,130 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+      <title>IPAD UI</title>
+      <link rel="stylesheet" href="swiper/css/swiper.min.css">
+      <link href="mystyle.css" rel="stylesheet" type="text/css" />
+      <script src="/socket.io/socket.io.js"></script>
+      <script>
+         var currentLocation = window.location;
+         var socket = io.connect('http://'+currentLocation.hostname+':8080');
+         console.log('oi');
+         socket.on('connect', function() {
+             // sends to socket.io server the host/port of oscServer
+             // and oscClient
+             socket.emit('config',
+                 {
+                     server: {
+                         port: 7001,
+                         host: '127.0.0.1'
+                     },
+                     client: {
+                         port: 7002,
+                         host: '127.0.0.1'
+                     }
+                 }
+             );
+         });
+         
+         socket.on('message', function(obj) {
+             var status = document.getElementById("status");
+             //status.innerHTML = obj[0];
+             console.log(obj);
+         
+              if(obj[0] == '/flood' && obj[1]>0.0) { // do flood screen
+            document.getElementById("floodoverlay").innerHTML = '<div class="MESSAGE"> <p>FLOOD</p> <img src="floodwarning.png" width="1000" height="1000" /><button class="cancelknap" type="button" onClick="stopFlood();" value="Go back">Cancel</button></div>';
+            
+            }else{
+             document.getElementById("floodoverlay").innerHTML =  ' ';
+            }
+         });
+         
+         function stopFlood() {
+         socket.emit('message', ['/stopFlood', 1.0]);
+         document.getElementById("floodoverlay").innerHTML =  ' ';
+         } 
+      </script>
+   </head>
+   <body>
+      <script src="swiper/js/swiper.min.js"></script>
+      <div class="ipadsize">
+         <div id="floodoverlay" class="OVERLAY">
+         </div>
+         <!--OVERLAY -->
+         <div class="content">
+            <div class="topbar">
+               <button class="reliefknap" type="button">   <img src="menu.png" width="100" height="100" alt="menu" /></button>
+               <button class="reliefknap2" type="button"><img src="fullscreen.png" width="100" height="100" alt="fullscreen" /></button>
+               <h1> Økolariet / Vejle </h1>
+            </div>
+            <!--topbar-->
+            <div class="kortet">
+               <div class="lokation">
+                  <h2> Tidslinie </h2>
+                  <div class="watch"> </div>
+               </div>
+               <div class="timeline">
+                  <!-- Slider main container -->
+                  <div class="swiper-container">
+                     <div class="space"></div>
+                     <!-- Additional required wrapper -->
+                     <div class="swiper-wrapper">
+                        <!-- Slides -->
+                        <div id="1842" class="swiper-slide">1842</div>
+                        <div id="1901" class="swiper-slide">1901</div>
+                        <div id="1954" class="swiper-slide">1954</div>
+                        <div id="1964" class="swiper-slide">1964</div>
+                        <div id="1972" class="swiper-slide">1972</div>
+                        <div id="1980" class="swiper-slide">1980</div>
+                        <div id="1985" class="swiper-slide">1985</div>
+                        <div id="1990" class="swiper-slide">1990</div>
+                        <div id="1995" class="swiper-slide">1995</div>
+                        <div id="2002" class="swiper-slide">2002</div>
+                        <div id="2008" class="swiper-slide">2008</div>
+                        <div id="2014" class="swiper-slide">2014</div>
+                     </div>
+                     <!-- If we need pagination -->
+                     <div class="swiper-pagination"></div>
+                     <!-- If we need navigation buttons -->
+                     <!-- If we need scrollbar -->
+                     <div class="swiper-scrollbar"></div>
+                  </div>
+               </div>
+               <!--timeline end-->
+               <object class="rykop" type="" data="" width="2732px" height="2048px"></object>
+            </div>
+            <!--kortet-->
+            <div class="wrap_me">
+               <button class="faneknap" type="button" onclick="location.href='index.html';" value="Go to område" > Område</button>
+            </div>
+            <div class="wrap_me">
+               <button class="faneknap_pushed" type="button" onclick="location.href='timeline.html';" value="Go to årstal"> Årstal</button>
+            </div>
+         </div>
+         <!--content-->
+      </div>
+      <!--ipadsize-->
+      <script>        
+         var mySwiper = new Swiper ('.swiper-container', {
+           // Optional parameters
+           direction: 'horizontal',
+           loop: true,
+           
+          
+           
+           // Navigation arrows
+           //nextButton: '.swiper-button-next',
+           //prevButton: '.swiper-button-prev',
+           
+           // And if we need scrollbar
+           scrollbar: '.swiper-scrollbar',
+           onTransitionEnd: function(swiper){
+            var currentSlideId = swiper.slides.eq(swiper.activeIndex).attr('id');
+            socket.emit('message', ['/time'+currentSlideId, 1.0]);
+    }
+         })        
+      </script>
+   </body>
+</html>
