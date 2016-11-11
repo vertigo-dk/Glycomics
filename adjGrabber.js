@@ -43,59 +43,66 @@ var articles = [];
 
 // if (program.monitor) {
 //     setTimeout(function() {
-//setInterval(function() {
-setTimeout(function() {
-    grabNewArticles();
 
-    setTimeout(function() {
-
-
-        showOnConsole();
-    }, 10000);
-
-}, 500);
 //}, 5000);
 
 server.listen(8080);
     console.log('Local server established at port 8080');
 
     // create fileserver
-    app.use(express.static(__dirname + '/Glycomics-client'));
+    app.use(express.static(__dirname ));
     app.get('/', function(req, res, next) {
         res.sendFile(__dirname + '/Glycomics-client/app/index.html');
     });
 
+    updateArticles();
 
+    //update routine every 10min
+    setInterval(function() {
+        var numArticles = articles.length;
+//        articles = [];
+        updateArticles();
+        setTimeout(function() {
+            articles.splice(0, numArticles);
+        }, 12000);
+    }, 600000);
+
+
+    //<script src="/socket.io/socket.io.js"></script>
     // <script>
-    //     var currentLocation = window.location;
-    //     var socket = io.connect('http://' + currentLocation.hostname + ':8080');
-    //     socket.on('connect', function() {
-    //         socket.emit('updateContent', {});
-    //     });
+    // var currentLocation = window.location;
+    // var socket = io.connect('http://' + currentLocation.hostname + ':8080');
+    // socket.on('connect', function() {
+    //     socket.emit('updateContent', {});
+    // });
     //
-    //
-    //
-    //     socket.on('article', function(article) {
-    //
-    //     });
+    // socket.on('article', function(article) {
+    //     if (article.title.length > 0) {
+    //         document.getElementById("title").innerHTML = article.title;
+    //     } else {
+    //         document.getElementById("title").innerHTML = "<p> no server found  </p>";
+    //     };
+    // });
     // </script>
 
-
-
     io.sockets.on('connection', function(socket) {
-        console.log('* page loaded');
+        console.log('--> page loaded');
         socket.on("updateContent", function(obj) {
-            socket.emit("article", articles[0]||undefined);
+            var rndArticle = Math.ceil(Math.random()*articles.length);
+            console.log('--> load article ' + rndArticle)
+            socket.emit("article", articles[rndArticle]||undefined);
         });
-
-
-        // setTimeout(function() {
-        //     socket.emit("nodeList", createList());
-        // }, 1000);
     });
 
-//     }, 10000);
-// }
+
+function updateArticles(){
+        grabNewArticles();
+        setTimeout(function() {
+            showOnConsole();
+        }, 10000);
+}
+
+
 
 function grabNewArticles() {
     guardian.content({
