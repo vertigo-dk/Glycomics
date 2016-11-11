@@ -19,6 +19,12 @@ guardian.config({
 
 var sentiment = require('multi-sentiment');
 
+// For webserver
+var express = require('express');
+var app = express();
+var server = require('http').createServer(app);
+var io = require('socket.io')(server);
+
 
 function Article(title, text, adjectives, tree) {
     this.title = title;
@@ -49,6 +55,44 @@ setTimeout(function() {
 
 }, 500);
 //}, 5000);
+
+server.listen(8080);
+    console.log('Local server established at port 8080');
+
+    // create fileserver
+    app.use(express.static(__dirname + '/Glycomics-client'));
+    app.get('/', function(req, res, next) {
+        res.sendFile(__dirname + '/Glycomics-client/app/index.html');
+    });
+
+
+    // <script>
+    //     var currentLocation = window.location;
+    //     var socket = io.connect('http://' + currentLocation.hostname + ':8080');
+    //     socket.on('connect', function() {
+    //         socket.emit('updateContent', {});
+    //     });
+    //
+    //
+    //
+    //     socket.on('article', function(article) {
+    //
+    //     });
+    // </script>
+
+
+
+    io.sockets.on('connection', function(socket) {
+        console.log('* page loaded');
+        socket.on("updateContent", function(obj) {
+            socket.emit("article", articles[0]||undefined);
+        });
+
+
+        // setTimeout(function() {
+        //     socket.emit("nodeList", createList());
+        // }, 1000);
+    });
 
 //     }, 10000);
 // }
@@ -85,12 +129,25 @@ function extractAdjectivesWordpos() {
                 var adjectives = results;
                 // make all lower case
                 for (j = 0; j < adjectives.length; j++) {
-                    adjectives[j] = adjectives[j].toLowerCase();
+                        adjectives[j] = adjectives[j].toLowerCase();
                 }
-                // sort them to get the longest in the start
+
+                // sort them to get the longest in an ascending order
                 adjectives.sort(function(a, b) {
                     return b.length - a.length
                 });
+
+                // for (n = adjectives.length; n > 0; n--) {
+                //     console.log(adjectives[n].length);
+                //    if (adjectives[n].length < 5) {
+                //
+                //         adjectives.split(j, adjectives.length-j-1);
+                //
+                //        n=0;
+                //
+                //    };
+                // };
+
 
                 // save them into our variable
                 articles[i].adjectives = adjectives;
@@ -127,22 +184,22 @@ function extractAdjectivesWordpos() {
 //     };
 // }
 
-function getSentiment(){
+function getSentiment() {
     console.log("--> get sentiment from the " + articles.length + " article-titles");
     for (i = 0; i < articles.length; i++) {
         (function(i) {
             // get sentiment from the title
             var string = articles[i].text
-            sentiment( string ,function(parsed){
-                 if(typeof string !=='string' || string.trim().length ==0 ){
-                     return ;
-                 }
+            sentiment(string, function(parsed) {
+                if (typeof string !== 'string' || string.trim().length == 0) {
+                    return;
+                }
 
-                 articles[i].sentiment = parsed;
+                articles[i].sentiment = parsed;
 
-                 //console.log(string)
-                 //console.log(JSON.stringify(parsed,0,4))
-             });
+                //console.log(string)
+                //console.log(JSON.stringify(parsed,0,4))
+            });
         })(i);
     };
 
@@ -155,8 +212,8 @@ function showOnConsole() {
     for (i = 0; i < articles.length; i++) {
         console.log('TITLE: ' + articles[i].title);
         //console.log('TEXT : ' + articles[i].text);
-        console.log('ADJECTIVES: ' + articles[i].adjectives);
-        console.log('SENTIMENT : ' + JSON.stringify(articles[i].sentiment,0,4));
+        console.log('ADJECTIVES #' + articles[i].adjectives.length + ': ' + articles[i].adjectives);
+        console.log('SENTIMENT : ' + JSON.stringify(articles[i].sentiment, 0, 4));
 
         console.log('------');
     }

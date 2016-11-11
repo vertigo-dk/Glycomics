@@ -13,6 +13,7 @@
     "stream-json": "x.x.x",
     "spacy-nlp": "x.x.x",
     "wordpos": "x.x.x",
-    "multi-sentiment": "x.x.x"
+    "multi-sentiment": "x.x.x",
+    "p2": "x.x.x"
   }
 }
