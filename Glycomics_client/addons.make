@@ -1,0 +1,6 @@
+ofxGui
+ofxMSACore
+ofxMSAPhysics
+ofxOsc
+ofxSyphon
+ofxXmlSettings

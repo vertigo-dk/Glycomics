@@ -1,0 +1,20 @@
+{
+  "name": "adjGrabber",
+  "version": "1.0.0",
+  "description": "",
+  "main": "adjGrabber.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jonas Fehr",
+  "license": "MIT",
+  "dependencies": {
+    "guardian-news": "x.x.x",
+    "stream-json": "x.x.x",
+    "spacy-nlp": "x.x.x",
+    "wordpos": "x.x.x",
+    "multi-sentiment": "x.x.x",
+    "p2": "x.x.x",
+    "node-osc": "0.2.x"
+  }
+}
