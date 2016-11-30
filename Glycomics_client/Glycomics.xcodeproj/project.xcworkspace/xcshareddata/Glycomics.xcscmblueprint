@@ -4,6 +4,7 @@
 
   },
   "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "86145F1292B789AB93966AE12565F1D778504ABC" : 0,
     "CB1CF109CA3A77AF931BD92C92B3F38F4A501645" : 0,
     "9158B35AD6F8E4EA4D75F8B3FBC37D03772AB05B" : 0,
     "2DE9C8846D9375EAACFABA8963120E8E7719BAF5" : 0,
@@ -12,15 +13,16 @@
   },
   "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "452D9149-2153-4E41-B969-DC3AC2BC190D",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
-    "CB1CF109CA3A77AF931BD92C92B3F38F4A501645" : "..\/..\/addons\/ofxMSACore",
+    "86145F1292B789AB93966AE12565F1D778504ABC" : "..\/addons\/ofxEasing",
+    "CB1CF109CA3A77AF931BD92C92B3F38F4A501645" : "..\/addons\/ofxMSACore",
     "9158B35AD6F8E4EA4D75F8B3FBC37D03772AB05B" : "Glycomics\/",
-    "2DE9C8846D9375EAACFABA8963120E8E7719BAF5" : "..\/..",
-    "F4CCB893AFADB97238A965FD2F28717F1CAAE613" : "..\/..\/addons\/ofxSyphon",
-    "6E35C72F83598061BA884C70E5F0DF607D045CF3" : "..\/..\/addons\/ofxMSAPhysics"
+    "2DE9C8846D9375EAACFABA8963120E8E7719BAF5" : "..",
+    "F4CCB893AFADB97238A965FD2F28717F1CAAE613" : "..\/addons\/ofxSyphon",
+    "6E35C72F83598061BA884C70E5F0DF607D045CF3" : "..\/addons\/ofxMSAPhysics"
   },
   "DVTSourceControlWorkspaceBlueprintNameKey" : "Glycomics",
   "DVTSourceControlWorkspaceBlueprintVersion" : 204,
-  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "Glycomics.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "Glycomics_client\/Glycomics.xcodeproj",
   "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
     {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/openframeworks\/openFrameworks",
@@ -31,6 +33,11 @@
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/memo\/ofxMSAPhysics",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "6E35C72F83598061BA884C70E5F0DF607D045CF3"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/arturoc\/ofxEasing",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "86145F1292B789AB93966AE12565F1D778504ABC"
     },
     {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/vertigo-dk\/Glycomics",

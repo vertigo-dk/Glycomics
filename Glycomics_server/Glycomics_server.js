@@ -17,11 +17,6 @@ guardian.config({
 
 var sentiment = require('multi-sentiment');
 
-// For webserver
-var express = require('express');
-var app = express();
-var server = require('http').createServer(app);
-var io = require('socket.io')(server);
 
 // OSC
 var osc = require('node-osc');
@@ -30,16 +25,7 @@ var client = new osc.Client('127.0.0.1', 3335);
 
 var oscServer = new osc.Server(3334, '127.0.0.1');
 
-oscServer.on("/newContent", function (msg, rinfo) {
-    console.log("--> received osc message:" + msg);
 
-    var answer =  new osc.Message('/newTree');
-    console.log("--> send new content:");
-    console.log( JSON.stringify(createTree(), 0, 2));
-    answer.append( JSON.stringify(createTree(), 0, 0));
-    client.send(answer)
-
-});
 
 
 function Article(title, text) {
@@ -52,11 +38,12 @@ function Article(title, text) {
 
 var articles = [];
 // load tree structures
-var tree_1 = require('./tree_struktures/tree_1.json');
-var tree_2 = tree_1;
-var tree_3 = tree_1;
+var tree_1 = require('./tree_struktures/tree_2.json');
+var tree_2 = require('./tree_struktures/tree_1.json');
+var tree_3 = require('./tree_struktures/tree_3.json');
 
-var readAndAnalysed = false;
+var isGrabbing = false;
+var indexArticles = 0;
 
 // program
 //     .version('0.0.1')
@@ -68,63 +55,50 @@ var readAndAnalysed = false;
 
 //}, 5000);
 
-server.listen(8080);
-console.log('Local server established at port 8080');
-
-// create fileserver
-app.use(express.static(__dirname));
-app.get('/', function(req, res, next) {
-    res.sendFile(__dirname + '/Glycomics-client/app/index.html');
-});
-
-
-
-
+isGrabbing = true;
 grabNewArticles();
 setTimeout(function() {
+    evaluateArticles();
     showOnConsole();
-}, 10000);
+    isGrabbing = false;
+}, 15000);
 
 //update routine every 10min
 setInterval(function() {
+    isGrabbing = true;
     var numArticles = articles.length;
     grabNewArticles();
     setTimeout(function() {
         articles.splice(0, numArticles);
         showOnConsole();
-    }, 10000);
-}, 600000);
+        isGrabbing = false;
+    }, 15000);
+}, 120000);//600000);
 
 
-//<script src="/socket.io/socket.io.js"></script>
-// <script>
-// var currentLocation = window.location;
-// var socket = io.connect('http://' + currentLocation.hostname + ':8080');
-// socket.on('connect', function() {
-//     socket.emit('updateContent', {});
-// });
-//
-// socket.on('article', function(article) {
-//     if (article.title.length > 0) {
-//         document.getElementById("title").innerHTML = article.title;
-//     } else {
-//         document.getElementById("title").innerHTML = "<p> no server found  </p>";
-//     };
-// });
-// </script>
+// ----- OSC RESPONSE -----
 
-io.sockets.on('connection', function(socket) {
-    console.log('--> page loaded');
-    socket.on("updateContent", function(obj) {
-        var rndArticle = Math.ceil(Math.random() * articles.length);
-        console.log('--> load article ' + rndArticle)
-        socket.emit("article", articles[rndArticle] || undefined);
-    });
+oscServer.on("/newContent", function (msg, rinfo) {
+    console.log("--> received osc message:" + msg);
+    if(isGrabbing){
+        setTimeout(sendAnswer(msg[1]), 15000);
+    }else{
+        sendAnswer(msg[1]);
+    };
 });
 
 
+function sendAnswer(treeNr){
+    var answer =  new osc.Message('/newTree');
+    // console.log("--> send new content:");
+    // console.log( JSON.stringify(createTree(), 0, 2));
+    answer.append(treeNr);
+    answer.append( JSON.stringify(createTree(), 0, 0));
+    client.send(answer)
+};
 
 
+// ----- FUNCTIONS -----
 function grabNewArticles() {
     guardian.content({
         section: 'world',
@@ -139,14 +113,13 @@ function grabNewArticles() {
 
         extractAdjectivesWordpos();
         getSentiment();
-
-        readAndAnalysed = true;
+        //setTimeout(evaluateArticles(), 5000);
 
     }, function(err) {
+        console.log("no internet connection")
         console.log(err);
     });
 };
-
 
 function extractAdjectivesWordpos() {
     console.log("--> extract adjectives from the " + articles.length + " articles");
@@ -181,33 +154,6 @@ function extractAdjectivesWordpos() {
     };
 }
 
-// function extractAdjectivesSpacyNLP(){
-//     console.log("--> extract adjectives from the "+articles.length+" articles");
-//     for (i = 0; i<articles.length; i++){
-//         (function(i) {
-//             nlp.parse(articles[i].text)
-//               .then((output) => {
-//                   console.log(output)
-//                   console.log(JSON.stringify(output[0].parse_tree, null, 2))
-//                   var words = output[0].parse_list;
-//                   for(j = 0; j<words.length; j++ ){
-//                     //	JJ	Adjective
-// 	                //  JJR	Adjective, comparative
-//                     //	JJS	Adjective, superlative
-//                       if(words[j].POS_fine=="JJ" || words[j].POS_fine=="JJR" || words[j].POS_fine=="JJS"){
-//                           //console.log(words[j].word);
-//                           var adjective = words[j].word;
-//                           articles[i].adjectives.push(adjective);
-//                       }
-//                   }
-//
-//                 //console.log(output)
-//                 //console.log(JSON.stringify(output[0].parse_tree, null, 2))
-//               })
-//          })(i);
-//     };
-// }
-
 function getSentiment() {
     console.log("--> get sentiment from the " + articles.length + " article-titles");
     for (i = 0; i < articles.length; i++) {
@@ -218,18 +164,43 @@ function getSentiment() {
                 if (typeof string !== 'string' || string.trim().length == 0) {
                     return;
                 }
-                articles[i].sentiment = parsed.sentiment.polarity;
-                if(articles[i].sentiment=="pos") articles[i].tree = tree_1.branches;
-                if(articles[i].sentiment=="neu") articles[i].tree = tree_1.branches;
-                if(articles[i].sentiment=="neg") articles[i].tree = tree_1.branches;
+                var sentiment = parsed.sentiment.polarity;
+                if(sentiment == 'undefined'){ // filter out those who can't be detected the right sentiment
+                    articles.splice(i,1);
+                } else {
+                    articles[i].sentiment = sentiment;
+                    if(articles[i].sentiment=="pos") articles[i].tree = tree_3.branches;
+                    if(articles[i].sentiment=="neu") articles[i].tree = tree_2.branches;
+                    if(articles[i].sentiment=="neg") articles[i].tree = tree_1.branches;
+
+                }
             });
         })(i);
     };
+};
 
-}
+function evaluateArticles(){
+    console.log("--> filter out articles, which don't provide enough material");
+    for (i = 0; i < articles.length; i++){
+            if( articles[i].adjectives.length < 50 ){
+                console.log("   --> remove article #" + i + " from the list: Not enough adjectives (<50)");
+                articles.splice(i,1);
+            };
+            // if( articles[i].sentiment == undefined ){
+            //     console.log("   --> remove article #" + i + " from the list: Problem recognising the sentiment");
+            //     articles.splice(i,1);
+            // };
+            // if( articles[i].title.length > 120 ){
+            //     console.log("   --> remove article #" + i + " from the list: title too long");
+            //     articles.splice(i,1);
+            // };
+    };
+};
+
 
 var createTree = function(){
-    var index = Math.ceil(Math.random() * articles.length);
+    indexArticles = (indexArticles+1)%articles.length;
+    var index = indexArticles;//Math.ceil(Math.random() * articles.length);
     console.log("--> create tree from article " +index);
 
     var tree = {};
@@ -250,13 +221,12 @@ var createTree = function(){
     return tree;
 }
 
-
 function showOnConsole() {
     console.log('');
     console.log('ARTICLES');
     console.log('------');
     for (i = 0; i < articles.length; i++) {
-        console.log('TITLE: ' + articles[i].title);
+        console.log('TITLE (' + articles[i].title.length + '): ' + articles[i].title);
         //console.log('TEXT : ' + articles[i].text);
         console.log('ADJECTIVES #' + articles[i].adjectives.length + ': ' + articles[i].adjectives);
         console.log('SENTIMENT : ' + JSON.stringify(articles[i].sentiment, 0, 4));

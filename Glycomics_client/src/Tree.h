@@ -8,6 +8,7 @@
 #include "MSAPhysics2D.h"
 #include "ofMain.h"
 #include "defines.h"
+#include "Branch.h"
 
 using namespace msa::physics;
 
@@ -15,58 +16,13 @@ using namespace msa::physics;
 
 #ifndef Tree_h
 #define Tree_h
-class Letter{
-public:
-    
-};
 
-class Branch{
-public:
-    int index;
-    int parent;
-    float angle;
-    bool changable;
-    string adjectiv;
-    
-    
-
-
-
-    
-    void setup(int _index, int _parent, float _angle, bool _changable, string _adjectiv, ofTrueTypeFont &font){
-        index = _index;
-        parent = _parent;
-        angle = _angle;
-        changable = _changable;
-        adjectiv = _adjectiv;
-        
-        adjMesh = font.getStringMesh(adjectiv,0,0);
-        width   = font.stringWidth(adjectiv);
-        height  = font.stringHeight(adjectiv);
-        
-    }
-    
-    
-    void draw(ofVec2f startPos, ofVec2f endPos){
-        ofTranslate(startPos);
-        ofRotateDeg(ofVec2f(1,0).angle(endPos-startPos) );
-        
-        ofTranslate(WORDSPACING, height/2);
-        adjMesh.draw();
-    }
-    
-    ofVec2f getEndPos( ofVec2f startPos){
-        return startPos.operator+( ofVec2f(width+2*WORDSPACING, 0).getRotated(-90+angle) );
-    }
-    
-    
-private:
-    ofMesh adjMesh;
-    ofTexture *fontText;
-    float width;
-    float height;
-
-    
+enum TreeState {
+    READY=0,
+    BUILD=1,
+    TRANSFORM=2,
+    REBUILD=3,
+    USED=4
 };
 
 
@@ -77,15 +33,25 @@ public:
     World2D_ptr         world;
     map<int, Branch> branches;
     map<int, Particle2D_ptr> nodes;
+    map<int, Particle2D_ptr> nodesFixed;
+
     
     ofTrueTypeFont font;
     ofTrueTypeFont fontTitle;
     string fontPath;
     string title;
+
+    float seedOffset;
     
     int width;
     int height;
+    
+    int index = 0;
+    int adjIndex = 0;
 
+
+    int status = READY;
+    
     void initPhysics() {
         width  = RENDER_W;
         height = RENDER_H;
@@ -96,9 +62,9 @@ public:
         world->setGravity(ofVec3f(0, GRAVITY, 0));
         
         // set world dimensions, not essential, but speeds up collision
-        world->setWorldSize(ofVec2f(BORDER_L, 0), ofVec2f(width-BORDER_R, height));
+        world->setWorldSize(ofVec2f(-100, 0), ofVec2f(width+100, height));
         world->setSectorCount(SECTOR_COUNT);
-        world->setDrag(0.97f);
+        world->setDrag(DRAG);
         //world->enableCollision();
     }
     
@@ -115,11 +81,12 @@ public:
         initPhysics();
        
         // Setup the tree structure
-        int index = 0;
         nodes[index] = world->makeParticle( ofVec2f(RENDER_W/2, RENDER_H) )->setMass(MASS)->setBounce(BOUNCE)->setRadius(RADIUS)->makeFixed();
+        
         
         title = tree_json["title"];
         
+        seedOffset = ofRandom(0, 10000);
         
         for(auto & b: tree_json["branches"]){
             if(!b.empty()){
@@ -128,29 +95,26 @@ public:
                 
                 Branch branch;
                 string adjective = b["adjective"];
-                branch.setup( index,  b["parent"], b["angle"], b["changable"], ( adjective ), font);
+                branch.setup( index,  b["parent"], b["angle"], b["changable"], adjective, font);
                 branches[index] = branch;
                 
                 nodes[index] = world->makeParticle(branch.getEndPos( nodes[b["parent"]]->getPosition()))->setMass(MASS)->setBounce(BOUNCE)->setRadius(RADIUS)->makeFree();//->enableCollision();
-                
+                nodesFixed[index] = world->makeParticle(branch.getEndPos( nodes[b["parent"]]->getPosition()))->setMass(MASS)->setBounce(BOUNCE)->setRadius(RADIUS)->makeFixed();//->enableCollision();
+
                 
                 // create spring
                 float distance = nodes[b["parent"]]->getPosition().distance( nodes[index]->getPosition() );
                 world->makeSpring(nodes[ b["parent"] ], nodes[index], SPRING_STRENGTH, distance);
                 
-                // create attractors
-                for(int i=0; i<world->numberOfParticles()-1; i++){
-                    Particle2D_ptr p = world->getParticle(i);
-                    if(p == nodes[index] && p == nodes[b["parent"]]) cout << "got here";
-
-                    if(p != nodes[index] && p != nodes[b["parent"]]){
-
-                        world->makeAttraction(nodes[index], p, RETRACTION);
-                    }
-                }
-                
             }
         }
+        
+        for( int i = 1; i <= index; i++){
+           // world->makeAttraction(nodes[i], nodesFixed[i], -ATTRACTION);
+            world->makeSpring(nodes[i], nodesFixed[i], SPRING_ORIGIN_STRENGTH, 0);
+
+        }
+        
         
         isInitialised = true;
         
@@ -158,27 +122,149 @@ public:
     
     void update(){
         world->update();
-    }
-    
-    void drawDebug(){
-        for(auto & p : world->getParticles()){
-            ofSetColor(255,0,0);
-            ofFill();
-            ofDrawCircle(p->getPosition(), 10);
+        
+        
+        for ( auto & node : nodes)
+        {
+            ofVec2f pos = node.second->getPosition();
             
+            float perPointNoise = (ofNoise(pos.x/NOISE_SPACING_DIV, pos.y/NOISE_SPACING_DIV, ofGetElapsedTimef()/NOISE_TIMER_FINE_DIV + seedOffset)-0.5)*2;
+            float masterNoise = (ofNoise(ofGetElapsedTimef()/NOISE_TIMER_ALL_DIV + seedOffset)-0.5)*2;
+            node.second->addVelocity( ofVec2f( ((perPointNoise*(1-MIX_NOISE)) +  (masterNoise*MIX_NOISE)) * NOISE_FORCE_MUL, 0) );
+        }
+        
+        // START CREATING TREE
+        if( status==BUILD && branches[1].status == INVISIBLE ) branches[1].status = MAKE_VISIBLE;
+
+        
+        for (auto & branch : branches)
+        {
+            
+            
+            switch(status)
+            {
+                case READY  :
+                    break;
+                case BUILD:
+
+                    if(branches[branch.second.parent].status == VISIBLE && branch.second.alpha < 1) branch.second.status = MAKE_VISIBLE;
+                    break;
+                case TRANSFORM :
+//                    Branch parentB = branches[branch.second.parent];
+//                    if(parentB.isChangable && !parentB.hasChild){
+//                        index++;
+//                        Branch newB;
+//                        string adjective = tree_json.adjectives[adjIndex];
+//                        newB.setup( index,  parent.index, 0, true, ( adjective ), font);
+//                        branches[index] = newB;
+//                        
+//                        nodes[index] = world->makeParticle(newB.getEndPos( nodes[parentB.index]->getPosition()))->setMass(MASS)->setBounce(BOUNCE)->setRadius(RADIUS)->makeFree();//->enableCollision();
+//                        nodesFixed[index] = world->makeParticle(newB.getEndPos( nodes[parentB.index]->getPosition()))->setMass(MASS)->setBounce(BOUNCE)->setRadius(RADIUS)->makeFixed();//->enableCollision();
+//                        
+//                        
+//                        // create spring
+//                        float distance = nodes[parentB.index]->getPosition().distance( nodes[index]->getPosition() );
+//                        world->makeSpring(nodes[parentB.index], nodes[index], SPRING_STRENGTH, distance); // Spring along Verb
+//                        
+//                        world->makeSpring(nodes[index], nodesFixed[index], SPRING_ORIGIN_STRENGTH, 0); // Spring position correct
+//                        
+//                    }
+                    break;
+                case REBUILD :
+                    if(branch.second.status != MAKE_INVISIBLE && branch.second.status != INVISIBLE ) branch.second.status = MAKE_INVISIBLE;
+                    
+                    break;
+            }
+            
+
+            
+//            if((i-1)>0)if(branches[i-1].isVisible) branch.second.makeVisible = true;
+//            i++;
+            
+            ofVec2f startPos = nodes[branch.second.parent]->getPosition();
+            ofVec2f endPos = nodes[branch.second.index]->getPosition();
+            ofVec2f startParent = nodes[branches[branch.second.parent].parent]->getPosition();
+
+            branch.second.update(startPos, endPos, startParent);
+            
+//            cout << "status Branch: " <<  branch.second.status <<endl;
+
+            
+  
+            
+        }
+        
+        cout << endl;
+        // MAKE TRANSFORM IF BUILD
+        if(status == BUILD){
+            bool isMakeVisible = false;
+            for (auto & branch : branches)
+            {
+                if( branch.second.status == MAKE_VISIBLE) isMakeVisible = true;
+            }
+            if(!isMakeVisible) status = TRANSFORM;
+        }
+        // MAKE USED IF REBUILT
+        if(status == REBUILD){
+            bool isMakeInvisible = false;
+            for (auto & branch : branches)
+            {
+                if( branch.second.status == MAKE_INVISIBLE){
+                 isMakeInvisible = true;
+                }
+            }
+            if(!isMakeInvisible) status = USED;
         }
         
         
         
+        // DRAW POINTS
+//        if(true){
+//            for (auto & branch : branches)
+//            {
+//                
+//                ofFill();
+//                ofSetColor(255, branch.second.alpha);
+//                ofPoint point = ofPoint(100, 100);//nodes[branch.second.index]->getPosition();
+//                ofDrawCircle(point.x, point.y, 0, POINTS_SIZE);
+//            }
+//        }
+
+        
+    }
+    
+    void drawDebug(){
+        // draw Particles
+        ofSetColor(255,0,0);
+        ofFill();
+        for(auto & p : world->getParticles()){
+            ofDrawCircle(p->getPosition(), 10);
+        }
+        
+        // draw springs
+        ofSetColor(0,0,255);
+        ofSetLineWidth(4);
         for(int i=0; i<world->numberOfSprings(); i++) {
             Spring2D_ptr s  = world->getSpring(i);
-            ofSetColor(0,0,255);
-            ofSetLineWidth(4);
             ofPoint a = s->getA()->getPosition();
             ofPoint b = s->getB()->getPosition();
             ofDrawLine(a, b);
             
         }
+    
+        // draw Beziers
+        ofSetLineWidth(5);
+        for (auto & branch : branches)
+        {
+            ofSetColor(255,150,0);
+            ofDrawLine((ofPoint)branch.second.startPos, (ofPoint)branch.second.startBezier);
+            ofDrawLine((ofPoint)branch.second.endPos, (ofPoint)branch.second.endBezier);
+            ofDrawCircle(branch.second.endBezier, 5);
+            ofDrawCircle(branch.second.startBezier, 5);
+            ofSetColor(255,255,0);
+            branch.second.drawBezier();
+        }
+                
     }
     
     void draw(){
@@ -188,15 +274,17 @@ public:
         
         for (auto & branch : branches)
         {
-            ofPushMatrix();
-            ofVec2f startPos = nodes[branch.second.parent]->getPosition();
-            ofVec2f endPos = nodes[branch.second.index]->getPosition();
-
-            branch.second.draw(startPos, endPos);
-            ofPopMatrix();
-
+            branch.second.draw();
         }
         font.getFontTexture().unbind();
+        
+        if(HAS_POINTS){
+            for (auto & branch : branches)
+            {
+                branch.second.drawPoint();
+            }
+        }
+
 
     }
     

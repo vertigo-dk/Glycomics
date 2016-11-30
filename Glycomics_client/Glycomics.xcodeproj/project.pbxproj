@@ -129,7 +129,6 @@
 		B87C60311EC1FE841C1ECD89 /* ofxLabel.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxLabel.h; path = ../../../addons/ofxGui/src/ofxLabel.h; sourceTree = SOURCE_ROOT; };
 		B9D38288DA32DD412A477F7C /* MSAPhysicsAttraction.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = MSAPhysicsAttraction.h; path = ../../../addons/ofxMSAPhysics/src/MSAPhysicsAttraction.h; sourceTree = SOURCE_ROOT; };
 		BC8881B3C8C0A1C45F042E7A /* OscPrintReceivedElements.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = OscPrintReceivedElements.cpp; path = ../../../addons/ofxOsc/libs/oscpack/src/osc/OscPrintReceivedElements.cpp; sourceTree = SOURCE_ROOT; };
-		BE4F27E6E0B80D78602B5781 /* textOnPath.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = textOnPath.h; path = src/textOnPath.h; sourceTree = SOURCE_ROOT; };
 		BF409A6581828B276295569E /* MSACoreMath.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = MSACoreMath.h; path = ../../../addons/ofxMSACore/src/MSACoreMath.h; sourceTree = SOURCE_ROOT; };
 		C2FAC65C491D4231379F3298 /* ofxOscReceiver.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxOscReceiver.cpp; path = ../../../addons/ofxOsc/src/ofxOscReceiver.cpp; sourceTree = SOURCE_ROOT; };
 		C58862C6D212C8E8A83810F4 /* ofxOscMessage.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxOscMessage.h; path = ../../../addons/ofxOsc/src/ofxOscMessage.h; sourceTree = SOURCE_ROOT; };
@@ -172,6 +171,9 @@
 		FF43CE651DD9DE9C002FD8B8 /* SyphonNameboundClient.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SyphonNameboundClient.h; sourceTree = "<group>"; };
 		FF43CE661DD9DE9C002FD8B8 /* SyphonNameboundClient.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SyphonNameboundClient.m; sourceTree = "<group>"; };
 		FF78FAF41DD9FCC600DBBFCF /* defines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = defines.h; sourceTree = "<group>"; };
+		FF8D53B61DDF213A00BA9524 /* Branch.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Branch.h; sourceTree = "<group>"; };
+		FFE112561DE720E2007A36A2 /* easing_terms_of_use.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = easing_terms_of_use.html; sourceTree = "<group>"; };
+		FFE112571DE720E2007A36A2 /* ofxEasing.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxEasing.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -352,6 +354,7 @@
 				E6053AB7FEC63D5F83825B88 /* ofxOsc */,
 				1F4FB5C423662B96ADFDCC0B /* ofxXmlSettings */,
 				FF43CE561DD9DE9C002FD8B8 /* ofxSyphon */,
+				FFE112541DE720E2007A36A2 /* ofxEasing */,
 			);
 			name = addons;
 			sourceTree = "<group>";
@@ -419,8 +422,8 @@
 				E4B69E1D0A3A1BDC003C02F2 /* main.cpp */,
 				E4B69E1E0A3A1BDC003C02F2 /* ofApp.cpp */,
 				E4B69E1F0A3A1BDC003C02F2 /* ofApp.h */,
-				BE4F27E6E0B80D78602B5781 /* textOnPath.h */,
 				FF43CE541DD9DCEF002FD8B8 /* Tree.h */,
+				FF8D53B61DDF213A00BA9524 /* Branch.h */,
 				FF78FAF41DD9FCC600DBBFCF /* defines.h */,
 			);
 			path = src;
@@ -531,6 +534,24 @@
 				2FD4B0329909D3527F003494 /* UdpSocket.h */,
 			);
 			name = ip;
+			sourceTree = "<group>";
+		};
+		FFE112541DE720E2007A36A2 /* ofxEasing */ = {
+			isa = PBXGroup;
+			children = (
+				FFE112551DE720E2007A36A2 /* src */,
+			);
+			name = ofxEasing;
+			sourceTree = "<group>";
+		};
+		FFE112551DE720E2007A36A2 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				FFE112561DE720E2007A36A2 /* easing_terms_of_use.html */,
+				FFE112571DE720E2007A36A2 /* ofxEasing.h */,
+			);
+			name = src;
+			path = ../../../addons/ofxEasing/src;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

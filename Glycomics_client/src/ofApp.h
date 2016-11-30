@@ -5,6 +5,9 @@
 #include "ofxSyphon.h"
 #include "defines.h"
 #include "ofxOsc.h"
+#include "ofxGui.h"
+
+
 
 
 
@@ -28,8 +31,6 @@ class ofApp : public ofBaseApp{
 		void gotMessage(ofMessage msg);
     
     
-    vector<Tree> trees;
-    ofJson tree_1_json;
     
     
     ofxOscReceiver oscReceiver;
@@ -39,9 +40,29 @@ class ofApp : public ofBaseApp{
     string msg_strings[NUM_MSG_STRINGS];
     float timers[NUM_MSG_STRINGS];
     
-    ofFbo render;
-    ofxSyphonServer syphon;
+    
+    struct Output {
+        ofFbo render;
+        ofxSyphonServer syphon;
+        vector<Tree> trees;
+        ofJson current_tree_json;
+        ofJson new_tree_json;
+
+    };
+    Output outputs[3];
+    
+    
     
     bool doDrawDebug = false;
+    
+    
+    // GUI
+    ofxPanel gui;
+    bool showGui;
+    
+    ofParameter<float> windSpeed;
+    ofParameter<float> windStrength;
+    ofParameter<float> stringNodes;
+
 		
 };
