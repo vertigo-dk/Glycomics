@@ -62,13 +62,15 @@ public:
         
         
         rotation = ofVec2f(1,0).angle(endPos-startPos);
+        
+        int beizerLength = width/2;
+        
+        startBezier = startPos+ofVec2f(0, -beizerLength).rotate(angle);
+        endBezier = endPos+ofVec2f(0, beizerLength);//.rotate(angle+90);
 
-        startBezier = startPos+ofVec2f(0, -BEZIER_LENGTH).rotate(angle);
-        endBezier = endPos+ofVec2f(0, BEZIER_LENGTH);//.rotate(angle+90);
-
-        if(angle == 90)  endBezier = endPos+ofVec2f(-BEZIER_LENGTH, 0);//.rotate(angle+90);
+        if(angle == 90)  endBezier = endPos+ofVec2f(-beizerLength, 0);//.rotate(angle+90);
         if(angle == -90){
-            endBezier = endPos+ofVec2f(BEZIER_LENGTH, 0);
+            endBezier = endPos+ofVec2f(beizerLength, 0);
             createBeizerLine(endPos, startPos, endBezier, startBezier);
         }else{
         

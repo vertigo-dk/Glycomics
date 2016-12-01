@@ -91,6 +91,8 @@ public:
         
         for(auto & b: tree_json["branches"]){
             if(!b.empty()){
+                
+                
                 index++;
 
                 
@@ -106,14 +108,11 @@ public:
                 // create spring
                 float distance = nodes[b["parent"]]->getPosition().distance( nodes[index]->getPosition() );
                 world->makeSpring(nodes[ b["parent"] ], nodes[index], SPRING_STRENGTH, distance);
-                
-            }
-        }
-        
-        for( int i = 1; i <= index; i++){
-           // world->makeAttraction(nodes[i], nodesFixed[i], -ATTRACTION);
-            world->makeSpring(nodes[i], nodesFixed[i], SPRING_ORIGIN_STRENGTH, 0);
+                    
+                    world->makeSpring(nodes[index], nodesFixed[index], SPRING_ORIGIN_STRENGTH, 0);
 
+
+            }
         }
         
         adjIndex = index;
@@ -148,43 +147,24 @@ public:
                     break;
                     
                 case BUILD :
-
-                    if(branches[branch.second.parent].status == VISIBLE && branch.second.alpha < 1) branch.second.status = MAKE_VISIBLE;
+                    if(branches[branch.second.parent].status == VISIBLE && !branch.second.changable && branch.second.alpha < 1) branch.second.status = MAKE_VISIBLE;
                     break;
                 case TRANSFORM :
-
-                    if(branch.second.changable && !branch.second.hasChild){
-                        adjIndex++;
-                        Branch newB;
-                        Branch* parentB = &branches[branch.second.parent];
-
-                        string adjective = tree_json["adjectives"][adjIndex];//tree_json["pool"];
-                        
-                        branch.second.adjective = adjective;
-                        
-                        branch.second.changable=false;
-//                        cout << tree_json["adjectives"] << endl;;
-
-                        
-                        
-//                        newB.setup( index,  parentB->index, 0, true, ( adjective ), font);
-//                        
-//                        branches[index] = newB;
-//                        
-//                        
-//                        nodes[index] = world->makeParticle(newB.getEndPos( nodes[parentB->index]->getPosition()))->setMass(MASS)->setBounce(BOUNCE)->setRadius(RADIUS)->makeFree();//->enableCollision();
-//                        nodesFixed[index] = world->makeParticle(nodes[index]->getPosition())->setMass(MASS)->setBounce(BOUNCE)->setRadius(RADIUS)->makeFixed();//->enableCollision();
-//                        
-//                        cout << "got here" << endl;
-//                        // create spring
-//                        float distance = nodes[parentB->index]->getPosition().distance( nodes[index]->getPosition() );
-//                        world->makeSpring(nodes[parentB->index], nodes[index], SPRING_STRENGTH, distance); // Spring along Verb
-//                        
-//                        world->makeSpring(nodes[index], nodesFixed[index], SPRING_ORIGIN_STRENGTH, 0); // Spring position correct
-//                        
-//                        branch.second.hasChild = true;
-                        
+                    if(branch.second.changable){
+                        if(branches[branch.second.parent].status == VISIBLE && !branch.second.hasChild){
+                            if(ofRandom(0,100) <= PROB_TRANSFORM){
+                                if( branch.second.status == INVISIBLE){
+                                    branch.second.status = MAKE_VISIBLE;
+                                    branches[branch.second.parent].hasChild = true;
+                                }
+                                if( branch.second.status == VISIBLE){
+                                    branch.second.status = MAKE_INVISIBLE;
+                                    branches[branch.second.parent].hasChild = false;
+                                }
+                            }
+                        }
                     }
+
                     break;
                     
                 case REBUILD :
@@ -217,7 +197,7 @@ public:
             bool isMakeVisible = false;
             for (auto & branch : branches)
             {
-                if( branch.second.status == MAKE_VISIBLE) isMakeVisible = true;
+                if( branch.second.status == MAKE_VISIBLE && !branch.second.changable) isMakeVisible = true;
             }
             if(!isMakeVisible) status = TRANSFORM;
         }

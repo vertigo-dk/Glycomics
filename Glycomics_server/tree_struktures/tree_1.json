@@ -26,12 +26,12 @@
         "adjective": ""
     }, {
         "parent": 3,
-        "angle": 45,
+        "angle": 18,
         "changable": false,
         "adjective": ""
     }, {
         "parent": 4,
-        "angle": -45,
+        "angle": -18,
         "changable": false,
         "adjective": ""
     }, {
@@ -62,37 +62,73 @@
     }, {
         "parent": 9,
         "angle": 0,
-        "changable": true,
+        "changable": false,
         "adjective": ""
     }, {
         "parent": 10,
         "angle": 0,
-        "changable": true,
+        "changable": false,
         "adjective": ""
     }, {
         "parent": 11,
         "angle": 0,
-        "changable": true,
+        "changable": false,
         "adjective": ""
     }, {
         "parent": 12,
         "angle": 0,
-        "changable": true,
-        "adjective": ""
-    }, {
-        "parent": 9,
-        "angle": 90,
-        "changable": true,
-        "adjective": ""
-    }, {
-        "parent": 10,
-        "angle": 90,
-        "changable": true,
+        "changable": false,
         "adjective": ""
     }, {
         "parent": 1,
         "angle": 90,
         "changable": true,
         "adjective": ""
-    }]
+    },{
+        "parent": 9,
+        "angle": 90,
+        "changable": true,
+        "adjective": ""
+    },{
+        "parent": 13,
+        "angle": 0,
+        "changable": true,
+        "adjective": ""
+    },{
+        "parent": 14,
+        "angle": 0,
+        "changable": true,
+        "adjective": ""
+    },{
+        "parent": 15,
+        "angle": 0,
+        "changable": true,
+        "adjective": ""
+    },{
+        "parent": 16,
+        "angle": 0,
+        "changable": true,
+        "adjective": ""
+    },{
+        "parent": 19,
+        "angle": 0,
+        "changable": true,
+        "adjective": ""
+    },{
+        "parent": 20,
+        "angle": 0,
+        "changable": true,
+        "adjective": ""
+    },{
+        "parent": 21,
+        "angle": 0,
+        "changable": true,
+        "adjective": ""
+    },{
+        "parent": 22,
+        "angle": 0,
+        "changable": true,
+        "adjective": ""
+    }
+]
 }
