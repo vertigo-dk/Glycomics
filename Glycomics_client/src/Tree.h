@@ -48,6 +48,7 @@ public:
     
     int index = 0;
     int adjIndex = 0;
+    ofJson tree_json;
 
 
     int status = READY;
@@ -68,7 +69,7 @@ public:
         //world->enableCollision();
     }
     
-    void setup(ofJson tree_json){
+    void setup(ofJson _tree_json){
 
         //load Font
         ofDirectory dir("fonts");
@@ -76,7 +77,7 @@ public:
         if(dir.size()>0) fontPath = dir.getPath(0);
         font.load(fontPath, FONT_SIZE);
         fontTitle.load(fontPath, FONT_SIZE_TITLE);
-        
+        tree_json = _tree_json;
         
         initPhysics();
        
@@ -99,7 +100,7 @@ public:
                 branches[index] = branch;
                 
                 nodes[index] = world->makeParticle(branch.getEndPos( nodes[b["parent"]]->getPosition()))->setMass(MASS)->setBounce(BOUNCE)->setRadius(RADIUS)->makeFree();//->enableCollision();
-                nodesFixed[index] = world->makeParticle(branch.getEndPos( nodes[b["parent"]]->getPosition()))->setMass(MASS)->setBounce(BOUNCE)->setRadius(RADIUS)->makeFixed();//->enableCollision();
+                nodesFixed[index] = world->makeParticle( nodes[index]->getPosition() )->setMass(MASS)->setBounce(BOUNCE)->setRadius(RADIUS)->makeFixed();//->enableCollision();
 
                 
                 // create spring
@@ -115,7 +116,7 @@ public:
 
         }
         
-        
+        adjIndex = index;
         isInitialised = true;
         
     }
@@ -145,31 +146,47 @@ public:
             {
                 case READY  :
                     break;
-                case BUILD:
+                    
+                case BUILD :
 
                     if(branches[branch.second.parent].status == VISIBLE && branch.second.alpha < 1) branch.second.status = MAKE_VISIBLE;
                     break;
                 case TRANSFORM :
-//                    Branch parentB = branches[branch.second.parent];
-//                    if(parentB.isChangable && !parentB.hasChild){
-//                        index++;
-//                        Branch newB;
-//                        string adjective = tree_json.adjectives[adjIndex];
-//                        newB.setup( index,  parent.index, 0, true, ( adjective ), font);
+
+                    if(branch.second.changable && !branch.second.hasChild){
+                        adjIndex++;
+                        Branch newB;
+                        Branch* parentB = &branches[branch.second.parent];
+
+                        string adjective = tree_json["adjectives"][adjIndex];//tree_json["pool"];
+                        
+                        branch.second.adjective = adjective;
+                        
+                        branch.second.changable=false;
+//                        cout << tree_json["adjectives"] << endl;;
+
+                        
+                        
+//                        newB.setup( index,  parentB->index, 0, true, ( adjective ), font);
+//                        
 //                        branches[index] = newB;
 //                        
-//                        nodes[index] = world->makeParticle(newB.getEndPos( nodes[parentB.index]->getPosition()))->setMass(MASS)->setBounce(BOUNCE)->setRadius(RADIUS)->makeFree();//->enableCollision();
-//                        nodesFixed[index] = world->makeParticle(newB.getEndPos( nodes[parentB.index]->getPosition()))->setMass(MASS)->setBounce(BOUNCE)->setRadius(RADIUS)->makeFixed();//->enableCollision();
 //                        
+//                        nodes[index] = world->makeParticle(newB.getEndPos( nodes[parentB->index]->getPosition()))->setMass(MASS)->setBounce(BOUNCE)->setRadius(RADIUS)->makeFree();//->enableCollision();
+//                        nodesFixed[index] = world->makeParticle(nodes[index]->getPosition())->setMass(MASS)->setBounce(BOUNCE)->setRadius(RADIUS)->makeFixed();//->enableCollision();
 //                        
+//                        cout << "got here" << endl;
 //                        // create spring
-//                        float distance = nodes[parentB.index]->getPosition().distance( nodes[index]->getPosition() );
-//                        world->makeSpring(nodes[parentB.index], nodes[index], SPRING_STRENGTH, distance); // Spring along Verb
+//                        float distance = nodes[parentB->index]->getPosition().distance( nodes[index]->getPosition() );
+//                        world->makeSpring(nodes[parentB->index], nodes[index], SPRING_STRENGTH, distance); // Spring along Verb
 //                        
 //                        world->makeSpring(nodes[index], nodesFixed[index], SPRING_ORIGIN_STRENGTH, 0); // Spring position correct
 //                        
-//                    }
+//                        branch.second.hasChild = true;
+                        
+                    }
                     break;
+                    
                 case REBUILD :
                     if(branch.second.status != MAKE_INVISIBLE && branch.second.status != INVISIBLE ) branch.second.status = MAKE_INVISIBLE;
                     
@@ -194,7 +211,7 @@ public:
             
         }
         
-        cout << endl;
+//        cout << endl;
         // MAKE TRANSFORM IF BUILD
         if(status == BUILD){
             bool isMakeVisible = false;

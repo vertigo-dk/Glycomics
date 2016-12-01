@@ -156,6 +156,7 @@ function extractAdjectivesWordpos() {
 
 function getSentiment() {
     console.log("--> get sentiment from the " + articles.length + " article-titles");
+    var iToDelete = [];
     for (i = 0; i < articles.length; i++) {
         (function(i) {
             // get sentiment from the title
@@ -164,9 +165,12 @@ function getSentiment() {
                 if (typeof string !== 'string' || string.trim().length == 0) {
                     return;
                 }
+                if(typeof articles[i] == undefined) {
+                    console.log("error with undefined", articles);
+                }
                 var sentiment = parsed.sentiment.polarity;
                 if(sentiment == 'undefined'){ // filter out those who can't be detected the right sentiment
-                    articles.splice(i,1);
+                    iToDelete.push(1);
                 } else {
                     articles[i].sentiment = sentiment;
                     if(articles[i].sentiment=="pos") articles[i].tree = tree_3.branches;
@@ -177,24 +181,32 @@ function getSentiment() {
             });
         })(i);
     };
+    for (i = 0; i < iToDelete.length; i++) {
+        articles.splice(iToDelete[i],1);
+    }
+
 };
 
 function evaluateArticles(){
     console.log("--> filter out articles, which don't provide enough material");
+    var iToDelete = [];
     for (i = 0; i < articles.length; i++){
             if( articles[i].adjectives.length < 50 ){
                 console.log("   --> remove article #" + i + " from the list: Not enough adjectives (<50)");
-                articles.splice(i,1);
+                iToDelete.push(i);
             };
             // if( articles[i].sentiment == undefined ){
             //     console.log("   --> remove article #" + i + " from the list: Problem recognising the sentiment");
-            //     articles.splice(i,1);
+            //     iToDelete.push(i);
             // };
-            // if( articles[i].title.length > 120 ){
-            //     console.log("   --> remove article #" + i + " from the list: title too long");
-            //     articles.splice(i,1);
-            // };
+            if( articles[i].title.length > 120 ){
+                console.log("   --> remove article #" + i + " from the list: title too long");
+                iToDelete.push(i);
+            };
     };
+    for (i = 0; i < iToDelete.length; i++) {
+        articles.splice(iToDelete[i],1);
+    }
 };
 
 
@@ -212,11 +224,9 @@ var createTree = function(){
         tree.branches[i].adjective = articles[index].adjectives[i];
     }
 
-    var length = articles[index].adjectives.length - numBranches;
+    tree.adjectives = articles[index].adjectives;
 
-    tree.pool = articles[index].adjectives.splice[numBranches, length-1];
-
-    //console.log(tree);
+    console.log(tree);
 
     return tree;
 }

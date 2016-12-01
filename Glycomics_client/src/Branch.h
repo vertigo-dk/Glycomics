@@ -32,6 +32,8 @@ public:
     
     ofPoint startBezier;
     ofPoint endBezier;
+    ofTrueTypeFont font;
+    
     
     bool hasChild = false;
     
@@ -40,12 +42,13 @@ public:
 
     int status = INVISIBLE;
     
-    void setup(int _index, int _parent, float _angle, bool _changable, string _adjective, ofTrueTypeFont &font){
+    void setup(int _index, int _parent, float _angle, bool _changable, string _adjective, ofTrueTypeFont _font){
         index = _index;
         parent = _parent;
         angle = _angle;
         changable = _changable;
-        adjective = _adjective;
+        adjective = oldAdj = _adjective;
+        font = _font;
         
         adjMesh = font.getStringMesh(adjective,0,0);
         width   = font.stringWidth(adjective);
@@ -105,7 +108,10 @@ public:
         
     
         
-  
+        if(oldAdj != adjective){
+            adjMesh = font.getStringMesh( adjective ,0,0);
+            oldAdj = adjective;
+        }
 
         
         ofMesh tempMesh = adjMesh;
@@ -186,6 +192,8 @@ private:
     float width;
     float height;
     float rotation;
+    string oldAdj;
+
     
     bool isOrtho = false;
 
