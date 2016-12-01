@@ -25,6 +25,7 @@ var client = new osc.Client('127.0.0.1', 3335);
 
 var oscServer = new osc.Server(3334, '127.0.0.1');
 
+var timeToUpdateTree = 30000; // 30sec
 
 
 
@@ -63,17 +64,30 @@ setTimeout(function() {
     isGrabbing = false;
 }, 15000);
 
+var numberOfTrees = 0;
+var indexTree = 1;
 //update routine every 10min
 setInterval(function() {
-    isGrabbing = true;
-    var numArticles = articles.length;
-    grabNewArticles();
-    setTimeout(function() {
-        articles.splice(0, numArticles);
-        showOnConsole();
-        isGrabbing = false;
-    }, 15000);
-}, 120000);//600000);
+    indexTree++;
+    if(indexTree == 4) indexTree = 1;
+    sendTree(indexTree);
+
+    // each 9 trees, the articles are loaded new
+    numberOfTrees++;
+
+    if (numberOfTrees > 9){
+        numberOfTrees = 0;
+        isGrabbing = true;
+        var numArticles = articles.length;
+        grabNewArticles();
+        setTimeout(function() {
+            articles.splice(0, numArticles);
+            showOnConsole();
+            isGrabbing = false;
+        }, 15000);
+    }
+
+}, timeToUpdateTree/3);
 
 
 // ----- OSC RESPONSE -----
@@ -81,14 +95,14 @@ setInterval(function() {
 oscServer.on("/newContent", function (msg, rinfo) {
     console.log("--> received osc message:" + msg);
     if(isGrabbing){
-        setTimeout(sendAnswer(msg[1]), 15000);
+        setTimeout(sendTree(msg[1]), 15000);
     }else{
-        sendAnswer(msg[1]);
+        sendTree(msg[1]);
     };
 });
 
 
-function sendAnswer(treeNr){
+function sendTree(treeNr){
     var answer =  new osc.Message('/newTree');
     // console.log("--> send new content:");
     // console.log( JSON.stringify(createTree(), 0, 2));
@@ -226,7 +240,7 @@ var createTree = function(){
 
     tree.adjectives = articles[index].adjectives;
 
-    console.log(tree);
+    // console.log(tree);
 
     return tree;
 }
