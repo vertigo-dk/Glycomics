@@ -78,10 +78,10 @@ setInterval(function() {
     if (numberOfTrees > 9){
         numberOfTrees = 0;
         isGrabbing = true;
-        var numArticles = articles.length;
         grabNewArticles();
         setTimeout(function() {
-            articles.splice(0, numArticles);
+            var articlesToRemove = articles.length-10;
+            if(articlesToRemove > 0) articles.splice(0, articlesToRemove);
             showOnConsole();
             isGrabbing = false;
         }, 15000);
