@@ -82,12 +82,12 @@
     }, {
         "parent": 1,
         "angle": 90,
-        "changable": true,
+        "changable": false,
         "adjective": ""
     },{
         "parent": 9,
         "angle": 90,
-        "changable": true,
+        "changable": false,
         "adjective": ""
     },{
         "parent": 13,

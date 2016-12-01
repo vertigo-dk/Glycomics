@@ -47,12 +47,12 @@
     }, {
         "parent": 2,
         "angle": -90,
-        "changable": true,
+        "changable": false,
         "adjective": ""
     }, {
         "parent": 8,
         "angle": 90,
-        "changable": true,
+        "changable": false,
         "adjective": ""
     }, {
         "parent": 3,
