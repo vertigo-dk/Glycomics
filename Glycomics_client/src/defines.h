@@ -23,6 +23,10 @@
 
 #define ALPHA_STEP .01
 
+#define BG_GRAD false
+#define BG_TOP 0
+#define BG_BUT 100
+
 
 // TRANSFORM
 

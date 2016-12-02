@@ -61,7 +61,12 @@ void ofApp::draw(){
         {
             glClearColor(0.0, 0.0, 0.0, 0.0);
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-            ofBackground(0);
+            
+            if(BG_GRAD){
+                ofBackgroundGradient(ofColor(BG_TOP), ofColor(BG_BUT));
+            }  else{
+               ofBackground(0);
+            }
             
             
             
