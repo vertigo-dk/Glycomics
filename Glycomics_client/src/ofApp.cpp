@@ -2,6 +2,8 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
+    ofSetFrameRate(50);
+    
     // OSC setup
     oscReceiver.setup(RECEIVE_PORT);
     oscSender.setup(SEND_HOST, SEND_PORT);
