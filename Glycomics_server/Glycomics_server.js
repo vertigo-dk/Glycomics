@@ -1,10 +1,3 @@
-var program = require('commander');
-
-// const spacyNLP = require('spacy-nlp')
-// // default port 6466
-// // start the server with the python client that exposes spacyIO (or use an existing socketIO server at IOPORT)
-// var serverPromise = spacyNLP.server({ port: process.env.IOPORT })
-// const nlp = spacyNLP.nlp
 
 var WordPOS = require('wordpos'),
     wordpos = new WordPOS();
@@ -46,21 +39,12 @@ var tree_3 = require('./tree_struktures/tree_3.json');
 var isGrabbing = false;
 var indexArticles = 0;
 
-// program
-//     .version('0.0.1')
-//     .option('-m --monitor', 'Live monitor the incomming articles')
-
-
-// if (program.monitor) {
-//     setTimeout(function() {
-
-//}, 5000);
 
 isGrabbing = true;
 grabNewArticles();
 setTimeout(function() {
     evaluateArticles();
-    showOnConsole();
+//    showOnConsole();
     isGrabbing = false;
 }, 15000);
 
@@ -82,7 +66,7 @@ setInterval(function() {
         setTimeout(function() {
             var articlesToRemove = articles.length-10;
             if(articlesToRemove > 0) articles.splice(0, articlesToRemove);
-            showOnConsole();
+ //           showOnConsole();
             isGrabbing = false;
         }, 15000);
     }
@@ -151,18 +135,15 @@ function extractAdjectivesWordpos() {
                     return b.length - a.length
                 });
 
-                // for (n = adjectives.length; n > 0; n--) {
-                //     console.log(adjectives[n].length);
-                //    if (adjectives[n].length < 5) {
-                //
-                //         adjectives.split(j, adjectives.length-j-1);
-                //
-                //        n=0;
-                //
-                //    };
-                // };
-                // save them into our variable
-                articles[i].adjectives = adjectives;
+                //Save only adjectives that are nore than 4 characters long
+                tmpAdjectives = []
+                adjectives.forEach(function(adj) {
+                    if (adj.length >= 4) {
+                        tmpAdjectives.push(adj)
+                    }
+                })
+
+                articles[i].adjectives = tmpAdjectives;
             });
         })(i);
     };
