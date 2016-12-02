@@ -184,7 +184,7 @@ function getSentiment() {
                 }
                 var sentiment = parsed.sentiment.polarity;
                 if(sentiment == 'undefined'){ // filter out those who can't be detected the right sentiment
-                    iToDelete.push(1);
+                    iToDelete.push(i);
                 } else {
                     articles[i].sentiment = sentiment;
                     if(articles[i].sentiment=="pos") articles[i].tree = tree_3.branches;
