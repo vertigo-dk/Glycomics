@@ -6,12 +6,12 @@
         "adjective": ""
     }, {
         "parent": 1,
-        "angle": -45,
+        "angle": -35,
         "changable": false,
         "adjective": ""
     }, {
         "parent": 1,
-        "angle": 45,
+        "angle": 35,
         "changable": false,
         "adjective": ""
     }, {
@@ -21,12 +21,12 @@
         "adjective": ""
     }, {
         "parent": 4,
-        "angle": -45,
+        "angle": -35,
         "changable": false,
         "adjective": ""
     }, {
         "parent": 4,
-        "angle": 45,
+        "angle": 35,
         "changable": false,
         "adjective": ""
     }, {
