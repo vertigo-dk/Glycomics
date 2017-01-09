@@ -14,6 +14,7 @@ var sentiment = require('multi-sentiment');
 // OSC
 var osc = require('node-osc');
 var client = new osc.Client('127.0.0.1', 3335);
+var clientWatchdog = new osc.Client('127.0.0.1', 7002);
 //client.send('/oscAddress', 200, function () { client.kill(); });
 
 var oscServer = new osc.Server(3334, '127.0.0.1');
@@ -52,6 +53,13 @@ var numberOfTrees = 0;
 var indexTree = 1;
 //update routine every 10min
 setInterval(function() {
+    // send watchdog dead 0
+    var m =  new osc.Message('/dead/glycomicsServer');
+    m.append(0);
+    clientWatchdog.send(m)
+
+
+    // update tree
     indexTree++;
     if(indexTree == 4) indexTree = 1;
     sendTree(indexTree);

@@ -7,6 +7,7 @@ void ofApp::setup(){
     // OSC setup
     oscReceiver.setup(RECEIVE_PORT);
     oscSender.setup(SEND_HOST, SEND_PORT);
+    oscSenderWatchdog.setup(SEND_HOST, SEND_PORT_WATCHDOG);
     
     
     
@@ -53,6 +54,16 @@ void ofApp::update(){
             t.update();
         }
     }
+    
+    // send dead 0 each second
+    //
+    if(ofGetFrameNum()%50==0){
+        ofxOscMessage m;
+        m.setAddress("/dead/glycomicsClient");
+        m.addFloatArg(0);
+        oscSenderWatchdog.sendMessage(m, false);
+    }
+    
 }
 
 //--------------------------------------------------------------

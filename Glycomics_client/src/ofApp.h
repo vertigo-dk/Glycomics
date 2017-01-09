@@ -35,6 +35,7 @@ class ofApp : public ofBaseApp{
     
     ofxOscReceiver oscReceiver;
     ofxOscSender oscSender;
+    ofxOscSender oscSenderWatchdog;
     void parseOSC(ofxOscReceiver &receiver);
     int current_msg_string;
     string msg_strings[NUM_MSG_STRINGS];

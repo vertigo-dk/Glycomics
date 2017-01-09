@@ -50,6 +50,8 @@
 #define SEND_PORT 3334
 #define SEND_HOST "localhost"
 
+#define SEND_PORT_WATCHDOG 7003
+
 #define NUM_MSG_STRINGS 20
 
 
