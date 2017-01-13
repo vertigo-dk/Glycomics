@@ -9,7 +9,7 @@
 			"modernui" : 1
 		}
 ,
-		"rect" : [ 417.0, 102.0, 925.0, 856.0 ],
+		"rect" : [ 417.0, 102.0, 519.0, 856.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -43,8 +43,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 660.964294, 617.0, 267.0, 154.0 ],
-					"presentation_rect" : [ 660.964294, 615.0, 0.0, 0.0 ],
+					"patching_rect" : [ 660.964294, 617.0, 267.0, 141.0 ],
 					"style" : "",
 					"text" : "ip list screens\n\n10.128.110.172          screen_1\n10.128.110.178          screen_2\n10.128.110.173          screen_3\n10.128.110.59            screen_4\n10.128.110.174          screen_5\n10.128.110.176          screen_6\n10.128.110.175          screen_7\n10.128.110.53            screen_8\n"
 				}
@@ -523,8 +522,8 @@
 , 							{
 								"name" : "newobjYellow-1",
 								"default" : 								{
-									"fontsize" : [ 12.059008 ],
-									"accentcolor" : [ 0.82517, 0.78181, 0.059545, 1.0 ]
+									"accentcolor" : [ 0.82517, 0.78181, 0.059545, 1.0 ],
+									"fontsize" : [ 12.059008 ]
 								}
 ,
 								"parentstyle" : "",
@@ -785,8 +784,8 @@
 , 							{
 								"name" : "newobjYellow-1",
 								"default" : 								{
-									"fontsize" : [ 12.059008 ],
-									"accentcolor" : [ 0.82517, 0.78181, 0.059545, 1.0 ]
+									"accentcolor" : [ 0.82517, 0.78181, 0.059545, 1.0 ],
+									"fontsize" : [ 12.059008 ]
 								}
 ,
 								"parentstyle" : "",
@@ -1202,9 +1201,9 @@
 					"maxclass" : "newobj",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 202.0, 663.0, 142.0, 22.0 ],
+					"patching_rect" : [ 202.0, 663.0, 174.0, 22.0 ],
 					"style" : "",
-					"text" : "udpSend 10.0.1.50 7500"
+					"text" : "udpSend 10.128.110.250 7500"
 				}
 
 			}
@@ -1349,7 +1348,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 30.0, 20.0, 148.0, 22.0 ],
 					"style" : "",
-					"text" : "Current Time: 14:49:8"
+					"text" : "Current Time: 15:10:18"
 				}
 
 			}
@@ -1366,7 +1365,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 193.0, 20.0, 50.0, 22.0 ],
 					"style" : "",
-					"text" : "144908"
+					"text" : "151018"
 				}
 
 			}
@@ -4337,7 +4336,7 @@
 			}
 , 			{
 				"name" : "inc-dec.maxpat",
-				"bootpath" : "~/Documents/Libraries/MAXexternals/downloaded-externals/RTC-lib_70/patchers/Toolbox",
+				"bootpath" : "~/Documents/Programmieren/OF/openFrameworks/apps/Glycomics/Panum_monitoring",
 				"type" : "JSON",
 				"implicit" : 1
 			}
@@ -4368,8 +4367,8 @@
 , 			{
 				"name" : "newobjYellow-1",
 				"default" : 				{
-					"fontsize" : [ 12.059008 ],
-					"accentcolor" : [ 0.82517, 0.78181, 0.059545, 1.0 ]
+					"accentcolor" : [ 0.82517, 0.78181, 0.059545, 1.0 ],
+					"fontsize" : [ 12.059008 ]
 				}
 ,
 				"parentstyle" : "",
