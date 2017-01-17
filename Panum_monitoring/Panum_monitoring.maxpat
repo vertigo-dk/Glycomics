@@ -9,7 +9,7 @@
 			"modernui" : 1
 		}
 ,
-		"rect" : [ 417.0, 102.0, 519.0, 856.0 ],
+		"rect" : [ 417.0, 102.0, 1690.0, 960.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -52,6 +52,7 @@
 , 			{
 				"box" : 				{
 					"id" : "obj-2",
+					"int" : 1,
 					"maxclass" : "gswitch",
 					"numinlets" : 3,
 					"numoutlets" : 1,
@@ -159,7 +160,7 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 686.964294, 244.0, 29.5, 22.0 ],
 					"style" : "",
-					"text" : "0"
+					"text" : "10"
 				}
 
 			}
@@ -257,14 +258,13 @@
 , 			{
 				"box" : 				{
 					"id" : "obj-146",
-					"linecount" : 2,
 					"maxclass" : "message",
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 834.75, 475.0, 576.0, 35.0 ],
+					"patching_rect" : [ 834.75, 475.0, 576.0, 22.0 ],
 					"style" : "",
-					"text" : "echo \"glycomicsClinet seem to be down. Need to be inspected\" | mail -s \"Problem Panum\" info@obscura.dk"
+					"text" : "echo \"sukkerkor raspberryPi nr:3 not responding\" | mail -s \"Problem Panum\" info@obscura.dk"
 				}
 
 			}
@@ -522,8 +522,8 @@
 , 							{
 								"name" : "newobjYellow-1",
 								"default" : 								{
-									"accentcolor" : [ 0.82517, 0.78181, 0.059545, 1.0 ],
-									"fontsize" : [ 12.059008 ]
+									"fontsize" : [ 12.059008 ],
+									"accentcolor" : [ 0.82517, 0.78181, 0.059545, 1.0 ]
 								}
 ,
 								"parentstyle" : "",
@@ -784,8 +784,8 @@
 , 							{
 								"name" : "newobjYellow-1",
 								"default" : 								{
-									"accentcolor" : [ 0.82517, 0.78181, 0.059545, 1.0 ],
-									"fontsize" : [ 12.059008 ]
+									"fontsize" : [ 12.059008 ],
+									"accentcolor" : [ 0.82517, 0.78181, 0.059545, 1.0 ]
 								}
 ,
 								"parentstyle" : "",
@@ -877,7 +877,7 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 515.464294, 244.0, 29.5, 22.0 ],
 					"style" : "",
-					"text" : "0"
+					"text" : "25"
 				}
 
 			}
@@ -1348,7 +1348,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 30.0, 20.0, 148.0, 22.0 ],
 					"style" : "",
-					"text" : "Current Time: 15:10:18"
+					"text" : "Current Time: 16:9:15"
 				}
 
 			}
@@ -1365,7 +1365,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 193.0, 20.0, 50.0, 22.0 ],
 					"style" : "",
-					"text" : "151018"
+					"text" : "160915"
 				}
 
 			}
@@ -2848,7 +2848,7 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 1237.821411, 244.0, 29.5, 22.0 ],
 					"style" : "",
-					"text" : "0"
+					"text" : "10"
 				}
 
 			}
@@ -2965,7 +2965,7 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 1007.678589, 244.0, 29.5, 22.0 ],
 					"style" : "",
-					"text" : "0"
+					"text" : "8"
 				}
 
 			}
@@ -3142,9 +3142,9 @@
 					"maxclass" : "newobj",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 942.571411, 827.0, 172.0, 22.0 ],
+					"patching_rect" : [ 942.571411, 827.0, 166.0, 22.0 ],
 					"style" : "",
-					"text" : "udpsend 110.128.110.63 7016"
+					"text" : "udpsend 10.128.110.63 7016"
 				}
 
 			}
@@ -3191,9 +3191,9 @@
 					"maxclass" : "newobj",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 432.571411, 827.0, 172.0, 22.0 ],
+					"patching_rect" : [ 432.571411, 827.0, 166.0, 22.0 ],
 					"style" : "",
-					"text" : "udpsend 110.128.110.65 7013"
+					"text" : "udpsend 10.128.110.65 7013"
 				}
 
 			}
@@ -4330,13 +4330,13 @@
 			}
 , 			{
 				"name" : "countdown.maxpat",
-				"bootpath" : "~/Documents/Programmieren/OF/openFrameworks/apps/Glycomics/Panum_monitoring",
+				"bootpath" : "~/Documents/openFrameworks/apps/Glycomics/Panum_monitoring",
 				"type" : "JSON",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "inc-dec.maxpat",
-				"bootpath" : "~/Documents/Programmieren/OF/openFrameworks/apps/Glycomics/Panum_monitoring",
+				"bootpath" : "~/Documents/openFrameworks/apps/Glycomics/Panum_monitoring",
 				"type" : "JSON",
 				"implicit" : 1
 			}
@@ -4367,8 +4367,8 @@
 , 			{
 				"name" : "newobjYellow-1",
 				"default" : 				{
-					"accentcolor" : [ 0.82517, 0.78181, 0.059545, 1.0 ],
-					"fontsize" : [ 12.059008 ]
+					"fontsize" : [ 12.059008 ],
+					"accentcolor" : [ 0.82517, 0.78181, 0.059545, 1.0 ]
 				}
 ,
 				"parentstyle" : "",
