@@ -44,8 +44,9 @@ var indexArticles = 0;
 isGrabbing = true;
 grabNewArticles();
 setTimeout(function() {
+    showOnConsole();
     evaluateArticles();
-//    showOnConsole();
+    showOnConsole();
     isGrabbing = false;
 }, 15000);
 
@@ -74,7 +75,7 @@ setInterval(function() {
         setTimeout(function() {
             var articlesToRemove = articles.length-10;
             if(articlesToRemove > 0) articles.splice(0, articlesToRemove);
- //           showOnConsole();
+            showOnConsole();
             isGrabbing = false;
         }, 15000);
     }
@@ -184,8 +185,10 @@ function getSentiment() {
             });
         })(i);
     };
+    var n = 0;
     for (i = 0; i < iToDelete.length; i++) {
-        articles.splice(iToDelete[i],1);
+        articles.splice(iToDelete[i]-n,1);
+        n++
     }
 
 };
@@ -197,17 +200,17 @@ function evaluateArticles(){
             if( articles[i].adjectives.length < 50 ){
                 console.log("   --> remove article #" + i + " from the list: Not enough adjectives (<50)");
                 iToDelete.push(i);
-            };
-            // if( articles[i].sentiment == undefined ){
-            //     console.log("   --> remove article #" + i + " from the list: Problem recognising the sentiment");
-            //     iToDelete.push(i);
-            // };
-            if( articles[i].title.length > 120 ){
+
+            } else if( articles[i].sentiment == undefined ){
+                console.log("   --> remove article #" + i + " from the list: Problem recognising the sentiment");
+                iToDelete.push(i);
+
+            } else if( articles[i].title.length > 120 ){
                 console.log("   --> remove article #" + i + " from the list: title too long");
                 iToDelete.push(i);
             };
     };
-    for (i = 0; i < iToDelete.length; i++) {
+    for (i = iToDelete.length; i >= 0 ; i--) {
         articles.splice(iToDelete[i],1);
     }
 };
@@ -223,6 +226,8 @@ var createTree = function(){
     tree.branches = articles[index].tree;
     var numBranches = Object.keys(tree.branches).length;
 
+    console.log(numBranches)
+    console.log(articles[index].adjectives.length)
     for(i=0; i<numBranches; i++){
         tree.branches[i].adjective = articles[index].adjectives[i];
     }
