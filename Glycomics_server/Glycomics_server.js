@@ -44,7 +44,6 @@ var indexArticles = 0;
 isGrabbing = true;
 grabNewArticles();
 setTimeout(function() {
-    showOnConsole();
     evaluateArticles();
     showOnConsole();
     isGrabbing = false;
@@ -73,6 +72,7 @@ setInterval(function() {
         isGrabbing = true;
         grabNewArticles();
         setTimeout(function() {
+            evaluateArticles();
             var articlesToRemove = articles.length-10;
             if(articlesToRemove > 0) articles.splice(0, articlesToRemove);
             showOnConsole();
@@ -226,8 +226,6 @@ var createTree = function(){
     tree.branches = articles[index].tree;
     var numBranches = Object.keys(tree.branches).length;
 
-    console.log(numBranches)
-    console.log(articles[index].adjectives.length)
     for(i=0; i<numBranches; i++){
         tree.branches[i].adjective = articles[index].adjectives[i];
     }
