@@ -9,7 +9,7 @@
 			"modernui" : 1
 		}
 ,
-		"rect" : [ 417.0, 102.0, 1690.0, 960.0 ],
+		"rect" : [ 417.0, 102.0, 2326.0, 1223.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -37,6 +37,44 @@
 		"style" : "",
 		"subpatcher_template" : "",
 		"boxes" : [ 			{
+				"box" : 				{
+					"id" : "obj-25",
+					"maxclass" : "newobj",
+					"numinlets" : 1,
+					"numoutlets" : 1,
+					"outlettype" : [ "bang" ],
+					"patching_rect" : [ 31.0, 381.0, 65.0, 22.0 ],
+					"style" : "",
+					"text" : "closebang"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-23",
+					"maxclass" : "newobj",
+					"numinlets" : 1,
+					"numoutlets" : 1,
+					"outlettype" : [ "bang" ],
+					"patching_rect" : [ 238.799988, 430.0, 60.0, 22.0 ],
+					"style" : "",
+					"text" : "loadbang"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-24",
+					"maxclass" : "button",
+					"numinlets" : 1,
+					"numoutlets" : 1,
+					"outlettype" : [ "bang" ],
+					"patching_rect" : [ 31.0, 430.0, 24.0, 24.0 ],
+					"style" : ""
+				}
+
+			}
+, 			{
 				"box" : 				{
 					"id" : "obj-22",
 					"linecount" : 10,
@@ -264,7 +302,7 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 834.75, 475.0, 576.0, 22.0 ],
 					"style" : "",
-					"text" : "echo \"sukkerkor raspberryPi nr:3 not responding\" | mail -s \"Problem Panum\" info@obscura.dk"
+					"text" : "echo \"sukkerkor raspberryPi nr:1 not responding\" | mail -s \"Problem Panum\" jonas@obscura.dk"
 				}
 
 			}
@@ -877,7 +915,7 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 515.464294, 244.0, 29.5, 22.0 ],
 					"style" : "",
-					"text" : "25"
+					"text" : "22"
 				}
 
 			}
@@ -1176,9 +1214,9 @@
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 814.75, 445.0, 351.0, 22.0 ],
+					"patching_rect" : [ 814.75, 445.0, 360.0, 22.0 ],
 					"style" : "",
-					"text" : "sprintf echo \\\"%s\\\" | mail -s \\\"Problem Panum\\\" info@obscura.dk"
+					"text" : "sprintf echo \\\"%s\\\" | mail -s \\\"Problem Panum\\\" jonas@obscura.dk"
 				}
 
 			}
@@ -1318,7 +1356,7 @@
 					"outlettype" : [ "int" ],
 					"patching_rect" : [ 103.0, 227.0, 61.0, 22.0 ],
 					"style" : "",
-					"text" : "< 220000"
+					"text" : "< 200000"
 				}
 
 			}
@@ -1348,7 +1386,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 30.0, 20.0, 148.0, 22.0 ],
 					"style" : "",
-					"text" : "Current Time: 16:9:15"
+					"text" : "Current Time: 11:12:49"
 				}
 
 			}
@@ -1365,7 +1403,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 193.0, 20.0, 50.0, 22.0 ],
 					"style" : "",
-					"text" : "160915"
+					"text" : "111249"
 				}
 
 			}
@@ -1388,7 +1426,7 @@
 							"modernui" : 1
 						}
 ,
-						"rect" : [ 197.0, 262.0, 518.0, 643.0 ],
+						"rect" : [ 197.0, 262.0, 1589.0, 643.0 ],
 						"bglocked" : 0,
 						"openinpresentation" : 0,
 						"default_fontsize" : 12.0,
@@ -2498,6 +2536,33 @@
 							}
 , 							{
 								"patchline" : 								{
+									"destination" : [ "obj-18", 0 ],
+									"disabled" : 0,
+									"hidden" : 0,
+									"source" : [ "obj-46", 0 ]
+								}
+
+							}
+, 							{
+								"patchline" : 								{
+									"destination" : [ "obj-19", 0 ],
+									"disabled" : 0,
+									"hidden" : 0,
+									"source" : [ "obj-47", 0 ]
+								}
+
+							}
+, 							{
+								"patchline" : 								{
+									"destination" : [ "obj-20", 0 ],
+									"disabled" : 0,
+									"hidden" : 0,
+									"source" : [ "obj-48", 0 ]
+								}
+
+							}
+, 							{
+								"patchline" : 								{
 									"destination" : [ "obj-46", 0 ],
 									"disabled" : 0,
 									"hidden" : 0,
@@ -2671,33 +2736,6 @@
 							}
 , 							{
 								"patchline" : 								{
-									"destination" : [ "obj-18", 0 ],
-									"disabled" : 0,
-									"hidden" : 0,
-									"source" : [ "obj-7", 6 ]
-								}
-
-							}
-, 							{
-								"patchline" : 								{
-									"destination" : [ "obj-19", 0 ],
-									"disabled" : 0,
-									"hidden" : 0,
-									"source" : [ "obj-7", 5 ]
-								}
-
-							}
-, 							{
-								"patchline" : 								{
-									"destination" : [ "obj-20", 0 ],
-									"disabled" : 0,
-									"hidden" : 0,
-									"source" : [ "obj-7", 4 ]
-								}
-
-							}
-, 							{
-								"patchline" : 								{
 									"destination" : [ "obj-3", 0 ],
 									"disabled" : 0,
 									"hidden" : 0,
@@ -2848,7 +2886,7 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 1237.821411, 244.0, 29.5, 22.0 ],
 					"style" : "",
-					"text" : "10"
+					"text" : "0"
 				}
 
 			}
@@ -2965,7 +3003,7 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 1007.678589, 244.0, 29.5, 22.0 ],
 					"style" : "",
-					"text" : "8"
+					"text" : "0"
 				}
 
 			}
@@ -3588,6 +3626,33 @@
 					"disabled" : 0,
 					"hidden" : 0,
 					"source" : [ "obj-21", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-135", 0 ],
+					"disabled" : 0,
+					"hidden" : 0,
+					"source" : [ "obj-23", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-79", 0 ],
+					"disabled" : 0,
+					"hidden" : 0,
+					"source" : [ "obj-24", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-24", 0 ],
+					"disabled" : 0,
+					"hidden" : 0,
+					"source" : [ "obj-25", 0 ]
 				}
 
 			}
