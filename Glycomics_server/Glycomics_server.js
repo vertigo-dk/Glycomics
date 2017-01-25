@@ -1,4 +1,3 @@
-
 var WordPOS = require('wordpos'),
     wordpos = new WordPOS();
 
@@ -44,6 +43,7 @@ var indexArticles = 0;
 isGrabbing = true;
 grabNewArticles();
 setTimeout(function() {
+    showOnConsole();
     evaluateArticles();
     showOnConsole();
     isGrabbing = false;
@@ -170,6 +170,7 @@ function getSentiment() {
                     return;
                 }
                 if(typeof articles[i] == undefined) {
+                    console.log("   --> remove article #" + i + " from the list: Problem recognising the sentiment");
                     console.log("error with undefined", articles);
                 }
                 var sentiment = parsed.sentiment.polarity;
@@ -197,12 +198,8 @@ function evaluateArticles(){
     console.log("--> filter out articles, which don't provide enough material");
     var iToDelete = [];
     for (i = 0; i < articles.length; i++){
-            if( articles[i].adjectives.length < 50 ){
+            if( articles[i].adjectives.length < 40 ){
                 console.log("   --> remove article #" + i + " from the list: Not enough adjectives (<50)");
-                iToDelete.push(i);
-
-            } else if( articles[i].sentiment == undefined ){
-                console.log("   --> remove article #" + i + " from the list: Problem recognising the sentiment");
                 iToDelete.push(i);
 
             } else if( articles[i].title.length > 120 ){
@@ -210,8 +207,10 @@ function evaluateArticles(){
                 iToDelete.push(i);
             };
     };
-    for (i = iToDelete.length; i >= 0 ; i--) {
-        articles.splice(iToDelete[i],1);
+    var n = 0;
+    for (i = 0; i < iToDelete.length; i++) {
+        articles.splice(iToDelete[i]-n,1);
+        n++
     }
 };
 
@@ -225,7 +224,8 @@ var createTree = function(){
     tree.title = articles[index].title;
     tree.branches = articles[index].tree;
     var numBranches = Object.keys(tree.branches).length;
-
+    //console.log("numBranches " + numBranches);
+    //console.log("numAdjectives " + articles[index].adjectives.length);
     for(i=0; i<numBranches; i++){
         tree.branches[i].adjective = articles[index].adjectives[i];
     }

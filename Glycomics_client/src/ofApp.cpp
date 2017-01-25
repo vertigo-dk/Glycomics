@@ -219,7 +219,7 @@ void ofApp::parseOSC(ofxOscReceiver &receiver){
                 stringstream s;
                 s << newContent;
                 s >> outputs[outIndex].new_tree_json;
-                
+            //cout << s.str() << endl << endl;
 //                outputs[outIndex].trees.clear();
                 Tree tree;
                 tree.setup(outputs[outIndex].new_tree_json);
