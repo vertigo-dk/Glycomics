@@ -43,7 +43,7 @@ var indexArticles = 0;
 isGrabbing = true;
 grabNewArticles();
 setTimeout(function() {
-    showOnConsole();
+    //showOnConsole();
     evaluateArticles();
     showOnConsole();
     isGrabbing = false;

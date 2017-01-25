@@ -9,7 +9,7 @@
 			"modernui" : 1
 		}
 ,
-		"rect" : [ 417.0, 102.0, 2326.0, 1223.0 ],
+		"rect" : [ 27.0, 79.0, 1969.0, 1223.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -37,6 +37,58 @@
 		"style" : "",
 		"subpatcher_template" : "",
 		"boxes" : [ 			{
+				"box" : 				{
+					"id" : "obj-39",
+					"maxclass" : "newobj",
+					"numinlets" : 2,
+					"numoutlets" : 2,
+					"outlettype" : [ "bang", "" ],
+					"patching_rect" : [ 730.964294, 244.0, 36.0, 22.0 ],
+					"style" : "",
+					"text" : "sel 5"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-28",
+					"maxclass" : "newobj",
+					"numinlets" : 1,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 692.464294, 293.0, 113.0, 22.0 ],
+					"style" : "",
+					"text" : "killOpen Glycomics"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-27",
+					"maxclass" : "newobj",
+					"numinlets" : 2,
+					"numoutlets" : 2,
+					"outlettype" : [ "bang", "" ],
+					"patching_rect" : [ 535.0, 244.0, 43.0, 22.0 ],
+					"style" : "",
+					"text" : "sel 15"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-8",
+					"maxclass" : "newobj",
+					"numinlets" : 1,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 503.714294, 293.0, 148.0, 22.0 ],
+					"style" : "",
+					"text" : "killOpen GlycomicsServer"
+				}
+
+			}
+, 			{
 				"box" : 				{
 					"id" : "obj-42",
 					"maxclass" : "message",
@@ -324,7 +376,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 475.964294, 46.0, 99.0, 22.0 ],
+					"patching_rect" : [ 459.964294, 46.0, 99.0, 22.0 ],
 					"style" : "",
 					"text" : "udpreceive 7002"
 				}
@@ -365,7 +417,7 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 834.75, 475.0, 576.0, 22.0 ],
 					"style" : "",
-					"text" : "echo \"sukkerkor raspberryPi nr:2 not responding\" | mail -s \"Problem Panum\" jonas@obscura.dk"
+					"text" : "echo \"sukkerkor raspberryPi nr:1 not responding\" | mail -s \"Problem Panum\" jonas@obscura.dk"
 				}
 
 			}
@@ -389,7 +441,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "bang" ],
-					"patching_rect" : [ 493.714294, 293.0, 24.0, 24.0 ],
+					"patching_rect" : [ 477.714294, 293.0, 24.0, 24.0 ],
 					"style" : ""
 				}
 
@@ -905,7 +957,7 @@
  ]
 					}
 ,
-					"patching_rect" : [ 241.799988, 516.0, 57.0, 22.0 ],
+					"patching_rect" : [ 241.0, 524.0, 57.0, 22.0 ],
 					"saved_object_attributes" : 					{
 						"description" : "",
 						"digest" : "",
@@ -952,7 +1004,7 @@
 					"numinlets" : 3,
 					"numoutlets" : 3,
 					"outlettype" : [ "bang", "bang", "" ],
-					"patching_rect" : [ 475.964294, 107.0, 46.0, 22.0 ],
+					"patching_rect" : [ 459.964294, 107.0, 46.0, 22.0 ],
 					"style" : "",
 					"text" : "sel 0 1"
 				}
@@ -965,9 +1017,9 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 515.464294, 244.0, 29.5, 22.0 ],
+					"patching_rect" : [ 499.464294, 244.0, 29.5, 22.0 ],
 					"style" : "",
-					"text" : "27"
+					"text" : "22"
 				}
 
 			}
@@ -978,7 +1030,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 475.964294, 184.0, 29.5, 22.0 ],
+					"patching_rect" : [ 459.964294, 184.0, 29.5, 22.0 ],
 					"style" : "",
 					"text" : "30"
 				}
@@ -991,7 +1043,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 2,
 					"outlettype" : [ "bang", "int" ],
-					"patching_rect" : [ 475.964294, 212.0, 69.0, 22.0 ],
+					"patching_rect" : [ 459.964294, 212.0, 69.0, 22.0 ],
 					"style" : "",
 					"text" : "countdown"
 				}
@@ -1004,7 +1056,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 2,
 					"outlettype" : [ "", "" ],
-					"patching_rect" : [ 475.964294, 77.0, 163.0, 22.0 ],
+					"patching_rect" : [ 459.964294, 77.0, 163.0, 22.0 ],
 					"style" : "",
 					"text" : "route /dead/glycomicsServer"
 				}
@@ -1017,7 +1069,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 475.964294, 345.0, 360.0, 22.0 ],
+					"patching_rect" : [ 459.964294, 345.0, 360.0, 22.0 ],
 					"style" : "",
 					"text" : "sprintf \\\"glycomicsClinet seem to be down. Need to be inspected\\\""
 				}
@@ -1149,7 +1201,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 2,
 					"outlettype" : [ "", "bang" ],
-					"patching_rect" : [ 818.75, 538.0, 32.5, 20.0 ],
+					"patching_rect" : [ 796.75, 566.0, 32.5, 20.0 ],
 					"style" : "",
 					"text" : "shell"
 				}
@@ -1303,7 +1355,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 263.571411, 497.0, 169.0, 20.0 ],
+					"patching_rect" : [ 310.571411, 524.0, 169.0, 20.0 ],
 					"style" : "",
 					"text" : "1 turn on power"
 				}
@@ -1425,7 +1477,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 30.0, 20.0, 148.0, 22.0 ],
 					"style" : "",
-					"text" : "Current Time: 12:11:54"
+					"text" : "Current Time: 13:18:59"
 				}
 
 			}
@@ -1442,7 +1494,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 193.0, 20.0, 50.0, 22.0 ],
 					"style" : "",
-					"text" : "121154"
+					"text" : "131859"
 				}
 
 			}
@@ -3526,6 +3578,15 @@
 			}
 , 			{
 				"patchline" : 				{
+					"destination" : [ "obj-27", 0 ],
+					"disabled" : 0,
+					"hidden" : 0,
+					"source" : [ "obj-130", 1 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
 					"destination" : [ "obj-127", 0 ],
 					"disabled" : 0,
 					"hidden" : 0,
@@ -3634,6 +3695,15 @@
 			}
 , 			{
 				"patchline" : 				{
+					"destination" : [ "obj-39", 0 ],
+					"disabled" : 0,
+					"hidden" : 0,
+					"source" : [ "obj-18", 1 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
 					"destination" : [ "obj-15", 0 ],
 					"disabled" : 0,
 					"hidden" : 0,
@@ -3646,6 +3716,7 @@
 					"destination" : [ "obj-20", 0 ],
 					"disabled" : 0,
 					"hidden" : 0,
+					"midpoints" : [ 828.25, 548.0, 806.25, 548.0 ],
 					"source" : [ "obj-2", 0 ]
 				}
 
@@ -3692,6 +3763,25 @@
 					"disabled" : 0,
 					"hidden" : 0,
 					"source" : [ "obj-26", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-8", 0 ],
+					"disabled" : 0,
+					"hidden" : 0,
+					"source" : [ "obj-27", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-20", 0 ],
+					"disabled" : 0,
+					"hidden" : 0,
+					"midpoints" : [ 701.964294, 409.0, 806.25, 409.0 ],
+					"source" : [ "obj-28", 0 ]
 				}
 
 			}
@@ -3781,6 +3871,15 @@
 					"hidden" : 0,
 					"midpoints" : [ 105.071411, 796.5, 952.071411, 796.5 ],
 					"source" : [ "obj-35", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-28", 0 ],
+					"disabled" : 0,
+					"hidden" : 0,
+					"source" : [ "obj-39", 0 ]
 				}
 
 			}
@@ -4039,16 +4138,6 @@
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-88", 0 ],
-					"disabled" : 0,
-					"hidden" : 0,
-					"midpoints" : [ 126.0, 413.0, 343.607147, 413.0, 343.607147, 35.0, 377.214294, 35.0 ],
-					"source" : [ "obj-7", 1 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
 					"destination" : [ "obj-99", 0 ],
 					"disabled" : 0,
 					"hidden" : 0,
@@ -4115,7 +4204,7 @@
 					"destination" : [ "obj-129", 0 ],
 					"disabled" : 0,
 					"hidden" : 0,
-					"midpoints" : [ 377.214294, 158.0, 485.464294, 158.0 ],
+					"midpoints" : [ 377.214294, 158.0, 469.464294, 158.0 ],
 					"source" : [ "obj-78", 0 ]
 				}
 
@@ -4212,28 +4301,44 @@
 			}
 , 			{
 				"patchline" : 				{
+					"color" : [ 0.067772, 0.0, 0.998199, 0.9 ],
 					"destination" : [ "obj-29", 0 ],
 					"disabled" : 0,
 					"hidden" : 0,
+					"midpoints" : [ 40.5, 514.0, 456.857147, 514.0, 456.857147, 438.5, 665.214294, 438.5 ],
 					"source" : [ "obj-79", 0 ]
 				}
 
 			}
 , 			{
 				"patchline" : 				{
+					"color" : [ 0.067772, 0.0, 0.998199, 0.9 ],
 					"destination" : [ "obj-41", 0 ],
 					"disabled" : 0,
 					"hidden" : 0,
+					"midpoints" : [ 40.5, 548.5, 40.5, 548.5 ],
 					"source" : [ "obj-79", 0 ]
 				}
 
 			}
 , 			{
 				"patchline" : 				{
+					"color" : [ 0.067772, 0.0, 0.998199, 0.9 ],
 					"destination" : [ "obj-44", 0 ],
 					"disabled" : 0,
 					"hidden" : 0,
+					"midpoints" : [ 40.5, 513.833374, 131.5, 513.833374 ],
 					"source" : [ "obj-79", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-20", 0 ],
+					"disabled" : 0,
+					"hidden" : 0,
+					"midpoints" : [ 513.214294, 409.0, 806.25, 409.0 ],
+					"source" : [ "obj-8", 0 ]
 				}
 
 			}
@@ -4454,18 +4559,55 @@
 			}
 , 			{
 				"patchline" : 				{
+					"color" : [ 0.986078, 0.0, 0.027161, 1.0 ],
 					"destination" : [ "obj-139", 0 ],
 					"disabled" : 0,
 					"hidden" : 0,
+					"midpoints" : [ 141.5, 500.0, 250.5, 500.0 ],
 					"source" : [ "obj-99", 0 ]
 				}
 
 			}
 , 			{
 				"patchline" : 				{
+					"color" : [ 0.986078, 0.0, 0.027161, 1.0 ],
+					"destination" : [ "obj-28", 0 ],
+					"disabled" : 0,
+					"hidden" : 0,
+					"midpoints" : [ 141.5, 499.0, 343.732147, 499.0, 343.732147, 282.0, 701.964294, 282.0 ],
+					"source" : [ "obj-99", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"color" : [ 0.985972, 0.0, 0.026989, 0.9 ],
 					"destination" : [ "obj-42", 0 ],
 					"disabled" : 0,
 					"hidden" : 0,
+					"midpoints" : [ 141.5, 499.0, 343.357147, 499.0, 343.357147, 427.5, 699.214294, 427.5 ],
+					"source" : [ "obj-99", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"color" : [ 0.986078, 0.0, 0.027161, 1.0 ],
+					"destination" : [ "obj-8", 0 ],
+					"disabled" : 0,
+					"hidden" : 0,
+					"midpoints" : [ 141.5, 499.0, 344.357147, 499.0, 344.357147, 282.0, 513.214294, 282.0 ],
+					"source" : [ "obj-99", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"color" : [ 0.986078, 0.0, 0.027161, 1.0 ],
+					"destination" : [ "obj-88", 0 ],
+					"disabled" : 0,
+					"hidden" : 0,
+					"midpoints" : [ 141.5, 501.0, 343.607147, 501.0, 343.607147, 35.0, 377.214294, 35.0 ],
 					"source" : [ "obj-99", 0 ]
 				}
 
@@ -4479,13 +4621,19 @@
 			}
 , 			{
 				"name" : "countdown.maxpat",
-				"bootpath" : "~/Documents/openFrameworks/apps/Glycomics/Panum_monitoring",
+				"bootpath" : "~/Documents/Programmieren/OF/openFrameworks/apps/Glycomics/Panum_monitoring",
 				"type" : "JSON",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "inc-dec.maxpat",
-				"bootpath" : "~/Documents/openFrameworks/apps/Glycomics/Panum_monitoring",
+				"bootpath" : "~/Documents/Programmieren/OF/openFrameworks/apps/Glycomics/Panum_monitoring",
+				"type" : "JSON",
+				"implicit" : 1
+			}
+, 			{
+				"name" : "killOpen.maxpat",
+				"bootpath" : "~/Documents/Programmieren/OF/openFrameworks/apps/Glycomics/Panum_monitoring",
 				"type" : "JSON",
 				"implicit" : 1
 			}
